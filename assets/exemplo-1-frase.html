@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vídeo virou código</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #0a0a0c;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  canvas {
+    /* Resolução interna 1920×1080; o CSS só escala para caber na janela */
+    width: min(100vw, 177.78vh);
+    height: auto;
+    aspect-ratio: 16 / 9;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+(() => {
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d');
+  const W = 1920, H = 1080;
+
+  const BG = '#0a0a0c';
+  const ORANGE = '#ff4e00';
+  const FONT = '800 190px system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+  const words = ['Vídeo', 'virou', 'código'];
+  const DURATION = 8.0;     // segundos do ciclo completo
+  const FIRST_IN = 0.5;     // quando a primeira palavra começa a entrar
+  const STAGGER = 0.75;     // intervalo entre palavras
+  const DROP = 220;         // de quanto acima a palavra cai (px)
+  const FADE_OUT = 0.7;     // fade no fim do ciclo, para o loop ficar limpo
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Layout: mede as palavras e centraliza a linha inteira
+  ctx.font = FONT;
+  const gap = ctx.measureText(' ').width;
+  const widths = words.map(w => ctx.measureText(w).width);
+  const total = widths.reduce((a, b) => a + b, 0) + gap * (words.length - 1);
+  let x = (W - total) / 2;
+  const layout = words.map((w, i) => {
+    const item = { text: w, x, width: widths[i], start: FIRST_IN + i * STAGGER };
+    x += widths[i] + gap;
+    return item;
+  });
+  const baseline = H / 2 + 65;
+
+  // Mola amortecida: começa em 1 (deslocado) e assenta em 0 com quique suave
+  function spring(t) {
+    if (t <= 0) return 1;
+    const damping = 5.2, freq = 9.5;
+    return Math.exp(-damping * t) * Math.cos(freq * t);
+  }
+
+  function drawWord(item, t) {
+    const local = t - item.start;
+    if (local <= 0) return;
+
+    const offset = spring(local);              // 1 → 0, com overshoot
+    const y = baseline - offset * DROP;
+    const alpha = Math.min(1, local / 0.25);
+
+    // Leve squash no contato: achata quando a mola passa do ponto de repouso
+    const squash = Math.max(0, -offset) * 0.35;
+    const sx = 1 + squash;
+    const sy = 1 - squash;
+
+    const cx = item.x + item.width / 2;
+    ctx.save();
+    ctx.globalAlpha *= alpha;
+    ctx.translate(cx, y);
+    ctx.scale(sx, sy);
+    ctx.fillText(item.text, -item.width / 2, 0);
+    ctx.restore();
+  }
+
+  function render(t) {
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.font = FONT;
+    ctx.fillStyle = ORANGE;
+    ctx.textBaseline = 'alphabetic';
+
+    // Fade de saída nos últimos instantes do ciclo
+    const outStart = DURATION - FADE_OUT;
+    ctx.globalAlpha = t > outStart ? Math.max(0, 1 - (t - outStart) / FADE_OUT) : 1;
+
+    if (reduceMotion) {
+      layout.forEach(item => ctx.fillText(item.text, item.x, baseline));
+    } else {
+      layout.forEach(item => drawWord(item, t));
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  let startTime = null;
+  function frame(now) {
+    if (startTime === null) startTime = now;
+    const t = ((now - startTime) / 1000) % DURATION;
+    render(t);
+    requestAnimationFrame(frame);
+  }
+
+  if (reduceMotion) {
+    render(DURATION / 2);
+  } else {
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>

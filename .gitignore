@@ -1,0 +1,19 @@
+# Publica só a apresentação "Claude agora faz vídeos" e o que ela usa.
+/*
+!/.gitignore
+!/README.md
+!/index.html
+!/ai-journey-claude-agora-faz-videos.html
+!/ai-journey-logo.svg
+!/claude-showreel-2026.mp4
+!/fontes-claude-agora-faz-videos.txt
+!/assets/
+/assets/*
+!/assets/exemplo-1-frase.html
+!/assets/exemplo-2-frase.mp4
+!/assets/exemplo-skill.mp4
+!/assets/exemplo-skill-storyboard.png
+!/assets/pratica-skill-1.mp4
+!/assets/pratica-skill-2.mp4
+!/assets/pratica-skill-3.mp4
+.DS_Store

@@ -1,0 +1,31 @@
+Claude agora faz vídeos — fontes verificadas, 20/10/2026
+
+Repositório: https://github.com/cth9191/animate
+  Criado em 04/10/2026 · MIT · 864 estrelas em 20/10/2026
+  Lidos: README.md e plugins/animate/skills/animate/SKILL.md (fluxo de 6 passos, estilos, regras inegociáveis, comandos de instalação e uso)
+  Imagens usadas no deck (MIT): docs/styles.png → assets/animate-styles.png · docs/storyboard.png → assets/animate-storyboard.png
+
+Exemplo exibido: claude-showreel-2026.mp4 (mesma pasta) · 1920×1080 · 60 fps · 15 s · H.264 + AAC
+  Explicação de construção fornecida pelo usuário em 20/10/2026 (canvas + função do tempo, Playwright com 4 processos, ffmpeg, som sintetizado em Node, −14 LUFS). Não reproduzimos o código.
+  Prompt usado (relatado pelo usuário): "/animate Crie um vídeo dinâmico de motion graphics de 15 segundos que demonstre o quanto você é um designer de animação incrível, como se fosse seu portfólio profissional para um currículo. Dê o seu máximo. Não utilize nenhuma skill."
+
+Exemplo com a skill: assets/exemplo-skill.mp4 · "Do Big Bang à era da IA" · 1920×1080 · 24 fps · 50 s · gerado em 20/10/2026 com a skill animate (ferramentas build/export/review), estilo papel recortado, a partir do exemplo history-of-ai do repositório.
+  Peça completa (código, brief com fontes das datas, LOG com checagens): animate/pieces/universo/
+  Datas na tela: 13,8 bilhões (idade do universo), 13 bilhões (primeiras estrelas), 4,5 bilhões (Terra), 3,8 bilhões (vida), 300 mil (Homo sapiens), 5 mil (escrita), 1450 (Gutenberg), 1946 (ENIAC), 1991 (web pública), nov 2022 (ChatGPT). Fontes listadas no brief.md.
+  Som validado por medição (−15,0 LUFS, pico −0,9 dBFS), não ouvido.
+
+Galeria da comunidade: https://skillry.dev/ai-videos/opus-5-5
+  Lida em 20/10/2026: 418 vídeos (motion graphics 229, explicativos 68, 3D 56, jogos 65), cada um com o prompt publicado pelo autor.
+  Ferramentas relatadas pelos autores: Remotion, HyperFrames, canvas, Three.js; som em Python; alguns usaram Suno, Gemini TTS, HeyGen. Relatos não verificados. Página comercial (planos pagos), prompts públicos.
+  Pedidos do slide "Instalar e usar" adaptados (simplificados, traduzidos, com colchetes) de:
+    @theSethian, "Show me the next 30 years" (1:21) — skillry.dev/ai-videos/opus-5-5/thesethian-384517
+    @humzaakhalid, reel "AI In Public" (0:24) — skillry.dev/ai-videos/opus-5-5/humzaakhalid-537875 (prompt completo em ai-in-public.guide)
+    @asei_ikarashi, painel de vendas (0:15) — skillry.dev/ai-videos/opus-5-5/asei-ikarashi-437835 (prompt não publicado; adaptado da descrição)
+    @tetsu_tetsu333, release de ferramenta SEO (0:52) — fluxo descrito pelo autor; prompt não publicado
+
+Ferramentas citadas:
+  Claude Code: https://code.claude.com
+  Playwright: https://playwright.dev
+  FFmpeg: https://ffmpeg.org
+
+Limites: nenhum vídeo foi gerado nesta preparação; a skill não foi instalada nem testada. Os exemplos de prompt do nível 1 são ilustrativos. Comparações com geradores de pixels (Veo, Kling, Higgsfield) são qualitativas, sem benchmark.

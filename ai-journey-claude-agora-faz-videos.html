@@ -1,0 +1,470 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Claude agora faz vídeos · AI Journey</title><style id="deckStyles">
+:root{--orange:#ff4e00;--orange-dark:#bd3900;--ink:#252321;--muted:#706a66;--line:#e9e3df;--soft:#fff3ec;--paper:#fff;--note-size:18px;color-scheme:light;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper)}button,textarea,select{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer;border:0}button:disabled{cursor:default;opacity:.35}button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--orange);outline-offset:4px}[hidden]{display:none!important}
+.deck{height:100dvh;overflow:hidden;position:relative}.slide{display:none;position:absolute;inset:0;overflow:auto;padding:clamp(28px,5.5vh,64px) clamp(24px,6vw,104px) 92px;background:var(--paper)}.slide.active{display:flex;flex-direction:column;animation:enter .3s ease-out}.slide>*{flex-shrink:0}.slide h1,.slide h2{max-width:1200px;font-size:clamp(38px,5.15vw,82px);line-height:1.04;font-weight:750;letter-spacing:-.055em;margin:22px 0 30px}.slide em{font-style:normal;color:var(--orange)}.eyebrow{font-size:11px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}.lead{font-size:clamp(20px,2.2vw,31px);line-height:1.4;letter-spacing:-.025em;margin:0 0 24px;max-width:1100px}.caption{font-size:12px;line-height:1.55;color:var(--muted);margin:14px 0}.brand{width:280px;height:auto;display:block}
+.cover{justify-content:center;background:#fffaf7}.cover h2{font-size:clamp(70px,9.5vw,150px);line-height:.93;margin:30px 0 24px;position:relative;z-index:1}.cover .eyebrow{color:var(--orange-dark);z-index:1}.cover .lead{z-index:1}.cover-bottom{display:flex;gap:44px;align-items:center;margin-top:38px;z-index:1}.cover-topics{border-left:1px solid #dccdc4;padding-left:28px;font-size:13px;line-height:1.8;color:var(--muted)}
+.frames{position:absolute;right:6vw;top:16%;width:36vw;height:36vw;max-width:520px;max-height:520px;pointer-events:none}.frames i{position:absolute;border:1px solid #ff4e0040;border-radius:18px;background:#ff4e0006;inset:0}.frames i:nth-child(2){inset:9%;border-color:#ff4e0060;background:#ff4e000a}.frames i:nth-child(3){inset:18%;border-color:#ff4e0090;background:#ff4e0012}.frames i:nth-child(4){inset:27%;border-color:var(--orange);background:var(--soft)}.frames b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:0;height:0;border-left:clamp(28px,4vw,60px) solid var(--orange);border-top:clamp(18px,2.5vw,38px) solid transparent;border-bottom:clamp(18px,2.5vw,38px) solid transparent;margin-left:6px}.frames span{position:absolute;bottom:-28px;right:0;font-size:11px;letter-spacing:.14em;color:var(--orange-dark);text-transform:uppercase}
+.quiet{justify-content:center;background:var(--soft)}.quiet h2{font-size:clamp(44px,6.6vw,106px)}.statement-line{display:flex;align-items:center;gap:30px;border-top:1px solid #efcdbd;padding-top:26px;margin-top:30px;font-size:18px}.statement-line span{color:var(--muted);min-width:7.5em}.statement-line+.statement-line{margin-top:22px;padding-top:22px}.statement-line strong{color:var(--orange-dark)}
+.reverse-lines{max-width:1100px}.reverse-lines p{font-size:clamp(24px,2.7vw,37px);line-height:1.3;padding:16px 0;margin:0;border-bottom:1px solid var(--line);letter-spacing:-.03em}.reverse-lines p span{color:var(--muted)}
+.cards{display:grid;gap:20px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.five{grid-template-columns:repeat(5,minmax(0,1fr))}.five .card{padding:22px}.five .card h3{font-size:clamp(17px,1.5vw,22px);margin:12px 0 8px}.five .card p{font-size:14px}.five .visual-number{font-size:44px}.card{border:1px solid var(--line);border-radius:20px;background:#fff;padding:28px;min-width:0}.card h3{font-size:clamp(20px,2.1vw,30px);letter-spacing:-.04em;line-height:1.12;margin:20px 0 10px}.card p{color:var(--muted);font-size:17px;line-height:1.5;margin:0}.card p+p{margin-top:10px}.visual-number{display:block;font-size:64px;font-weight:600;color:var(--orange);line-height:1.1;letter-spacing:-.065em}.accent-card{background:var(--soft);border-color:#ffc4a9}.takeaway{margin:28px 0 0;font-size:22px;letter-spacing:-.02em;max-width:1100px}
+.question-band{padding:28px 32px;border-left:4px solid var(--orange);background:var(--soft);font-size:clamp(24px,3vw,40px);line-height:1.3;letter-spacing:-.035em;max-width:1200px}.question-band strong{color:var(--orange-dark);font-weight:650}.question-band.compact{font-size:22px;margin-top:34px;padding:22px 28px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}.split.top{align-items:start}
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 10px;max-width:1300px}.pipeline article{position:relative;padding:28px 34px 28px 0}.pipeline article:not(:last-child):after{content:"→";position:absolute;right:6px;top:30px;font-size:34px;color:var(--orange);line-height:1}.pipeline .step{display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--orange);border-radius:50%;color:var(--orange-dark);font-size:14px;font-weight:650}.pipeline h3{font-size:clamp(22px,2.3vw,32px);letter-spacing:-.04em;line-height:1.1;margin:22px 0 10px}.pipeline p{font-size:17px;color:var(--muted);line-height:1.5;margin:0}.pipeline article>code{display:inline-block;margin-top:14px;font-size:13px;background:#f5f1ee;padding:6px 10px;border-radius:6px;color:var(--orange-dark);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.frame-strip{display:flex;gap:10px;margin:26px 0 6px;max-width:1300px}.frame-strip i{flex:1;aspect-ratio:16/9;border:1px solid var(--line);border-radius:10px;background:#fffaf7;position:relative;overflow:hidden}.frame-strip i:before{content:"";position:absolute;width:26%;height:26%;background:var(--orange);border-radius:50%;left:calc(var(--x) * 1%);top:38%}.frame-strip i:after{content:attr(data-t);position:absolute;right:8px;bottom:6px;font-size:10px;color:var(--muted);letter-spacing:.08em}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}.levels .card{display:flex;flex-direction:column}.levels .card.now{background:var(--soft);border-color:#ffc4a9}.levels .card p{flex:1}.levels .visual-number{font-size:52px}
+.video-full{padding:0;background:#000;justify-content:center;align-items:center}.video-full video{width:100%;height:100%;object-fit:contain;background:#000;display:block;cursor:pointer}.video-full .video-hint{position:absolute;right:22px;bottom:22px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff80}.video-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:36px;align-items:start;max-width:1320px}.video-slide .video-wrap{max-width:min(900px,calc((100dvh - 330px) * 16 / 9));width:100%}.video-slide video{display:block;width:100%;aspect-ratio:16/9;background:#000;border-radius:16px;border:1px solid var(--line);box-shadow:0 20px 60px #54351a18}.prompt-box{margin-top:12px;font-size:clamp(13px,1.15vw,17px)}.install-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;max-width:1100px}.copy-list.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1300px}.copy-list.grid .copy-item{padding:16px 18px;align-items:flex-start}.copy-list.grid .copy-item code{font-size:clamp(12px,1.1vw,15px)}.copy-list.grid .copy-btn{margin-top:2px}.install-grid pre{font-size:clamp(12px,1.05vw,15px);padding:18px 20px}.install-grid .card{padding:20px}.install-grid .card p{font-size:15px}.copy-list{display:flex;flex-direction:column;gap:8px}.copy-item{display:flex;align-items:center;gap:10px;background:#2a211c;color:#fbe9df;border-radius:12px;padding:12px 14px}.copy-item code{flex:1;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(11px,.95vw,13px);line-height:1.45}.copy-item code b{color:#ff9769;font-weight:500}.copy-item code small{display:block;margin-top:5px;font-family:Inter,ui-sans-serif,sans-serif;font-size:10px;color:#b5a89f;letter-spacing:.02em}.copy-btn{flex-shrink:0;background:#ffffff14;color:#fbe9df;border:1px solid #ffffff30;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:600;letter-spacing:.04em}.copy-btn:hover{background:#ff4e00;border-color:#ff4e00;color:#fff}.copy-btn.done{background:var(--orange-dark);border-color:var(--orange-dark);color:#fff}.copy-btn.solo{margin-top:12px;background:var(--orange-dark);border-color:var(--orange-dark);color:#fff;padding:9px 14px;font-size:12px}.copy-btn.solo:hover{background:#a73100}.cards.compact .card{padding:22px}.cards.compact .card h3{margin:12px 0 8px}.cards.compact .card p{font-size:15px;line-height:1.45}.cards.compact .visual-number{font-size:48px}table.dense td,table.dense th{padding:11px 12px}table.recipes{max-width:1250px;font-size:clamp(16px,1.6vw,22px)}table.recipes td,table.recipes th{padding:15px 14px}table.recipes td:first-child{min-width:230px}table.dense{font-size:clamp(13px,1.2vw,16px)}.img-slide{align-items:flex-start}.img-slide figure{margin:0;max-width:1300px}.img-slide img{display:block;width:auto;max-width:100%;max-height:62vh;border:1px solid var(--line);border-radius:16px;background:#fff}.img-slide figcaption{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.5}
+pre{margin:0;background:#2a211c;color:#fbe9df;border-radius:14px;padding:22px 26px;font-size:clamp(13px,1.25vw,18px);line-height:1.55;overflow:auto;max-width:1200px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}pre b{color:#ff9769;font-weight:500}pre i{color:#b5a89f;font-style:normal}code.inline{background:#f5f1ee;padding:3px 7px;border-radius:5px;font-size:.9em;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+table{width:100%;border-collapse:collapse;font-size:clamp(14px,1.35vw,18px);text-align:left;max-width:1300px}th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase}td,th{padding:16px 14px;border-bottom:1px solid var(--line);line-height:1.4;vertical-align:top}td:first-child{color:var(--orange-dark);font-weight:650;white-space:nowrap}td:last-child{color:var(--muted)}
+.rules{counter-reset:rule;max-width:1200px;columns:2;column-gap:40px;margin-top:6px}.rules p{break-inside:avoid;counter-increment:rule;font-size:clamp(17px,1.7vw,23px);line-height:1.4;padding:14px 0 14px 54px;margin:0;position:relative;border-bottom:1px solid var(--line)}.rules p:before{content:counter(rule,decimal-leading-zero);position:absolute;left:0;top:16px;color:var(--orange);font-weight:650;font-size:15px;letter-spacing:.06em}.rules p span{display:block;color:var(--muted);font-size:15px;margin-top:4px}
+.practice{background:#fffaf7}.practice .eyebrow{color:var(--orange-dark)}.practice-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}.practice-grid .lead{margin-bottom:12px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.wide{grid-column:1/-1}.field label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.field textarea{width:100%;min-height:74px;resize:vertical;border:1px dashed #ffac85;background:#fff;border-radius:10px;padding:14px 16px;font-size:17px;line-height:1.45;color:var(--ink)}.field.wide textarea{min-height:112px}.field textarea::placeholder{color:#b5a89f}.field textarea:focus{border-style:solid;outline:2px solid var(--orange);outline-offset:0}.suggestion{border-left:3px solid var(--orange);padding:6px 0 6px 18px;margin:18px 0 0;color:var(--muted);font-size:15px;line-height:1.55}.suggestion strong{display:block;color:var(--ink);font-size:17px;margin-bottom:4px}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:12px 36px;max-width:1200px;margin-top:8px}.checklist p{margin:0;padding:14px 0 14px 40px;border-bottom:1px solid var(--line);font-size:clamp(17px,1.75vw,23px);position:relative;line-height:1.35}.checklist p:before{content:"";position:absolute;left:0;top:18px;width:20px;height:20px;border:1.5px solid var(--orange);border-radius:5px}
+.orange-slide{background:var(--orange-dark);color:white;justify-content:center}.orange-slide .eyebrow{color:#fff}.orange-slide em{color:#fff}.orange-slide .card{background:transparent;border-color:#ffffff66;color:#fff}.orange-slide .visual-number,.orange-slide .card p{color:#fff}.orange-slide .takeaway{margin-top:35px}
+.closing{justify-content:center;background:#fffaf7}.closing h2{font-size:clamp(45px,6.5vw,102px)}.closing-footer{display:flex;align-items:center;justify-content:space-between;gap:32px;border-top:1px solid var(--line);padding-top:26px;max-width:1100px;margin-top:24px}.closing-footer .end-brand{width:240px;max-width:100%;flex-shrink:0}.sources{font-size:13px;color:var(--muted);line-height:1.8}.sources a{color:var(--orange-dark);text-decoration:none;overflow-wrap:anywhere}
+.controls{position:fixed;z-index:10;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:14px;background:#fffffff5;padding:7px 10px;box-shadow:0 6px 35px #54351a10;white-space:nowrap;transition:opacity .2s}.controls button{background:transparent;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--ink);font-weight:550}.controls button:hover{background:var(--soft)}.controls #presentBtn{background:var(--orange-dark);color:#fff}.controls #slideCount{font-size:11px;min-width:42px;text-align:center;font-variant-numeric:tabular-nums}.controls #sectionName{font-size:10px;color:var(--muted);padding:0 12px;max-width:170px;overflow:hidden;text-overflow:ellipsis}.control-divider{height:22px;width:1px;background:var(--line);margin:0 3px}.progress{position:fixed;bottom:0;left:0;height:3px;background:var(--orange);z-index:11;transition:width .25s}.on-video .controls{opacity:.25}.on-video .controls:hover,.on-video .controls:focus-within{opacity:1}.presenting.idle .controls{opacity:0;pointer-events:none}.presenting.idle .controls:hover,.presenting.idle .controls:focus-within{opacity:1;pointer-events:auto}.presenting.idle{cursor:none}
+.notes-panel{position:fixed;z-index:20;right:18px;top:18px;bottom:87px;background:white;border:1px solid var(--line);box-shadow:0 15px 70px #22110722;border-radius:16px;width:min(460px,calc(100vw - 36px));padding:24px;display:flex;flex-direction:column;overflow:auto}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}.panel-heading h2{font-size:16px;letter-spacing:-.02em;margin:0}.panel-heading button{background:#f5f1ee;padding:8px 11px;border-radius:7px;color:var(--ink)}#notesSlideTitle{font-size:16px;line-height:1.4}.notes-panel label{font-size:11px;color:var(--muted);margin:8px 0}.notes-panel textarea{width:100%;flex:1;min-height:200px;resize:none;border:1px solid var(--line);background:#fffdfb;border-radius:8px;padding:16px;font-size:var(--note-size);line-height:1.6;color:var(--ink)}.secondary{background:#fff;border:1px solid var(--line);color:var(--ink);padding:10px 14px;border-radius:8px;font-size:13px;align-self:flex-start}.secondary:hover{background:var(--soft)}.notice{position:fixed;z-index:60;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;border-radius:12px;padding:18px 24px;font-size:14px;max-width:90vw;width:max-content;box-shadow:0 10px 35px #0002}
+.presenter-body{background:#f5f1ee;overflow:auto}.presenter{padding:24px;max-width:1500px;margin:auto}.presenter-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:0 0 20px}.presenter-toolbar strong{font-size:17px}#connectionStatus{font-size:12px;display:block;margin-top:6px;color:var(--muted)}.timer-controls{display:flex;align-items:center;gap:8px}.timer-controls output{font-size:26px;font-variant-numeric:tabular-nums;min-width:85px}.presenter button{padding:10px 14px;border:1px solid #ddd3cb;border-radius:8px;background:#fff;color:var(--ink);font-size:12px}.presenter button:hover{background:var(--soft)}.presenter-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:24px}.presenter-card{background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line)}.presenter-card h3{font-size:clamp(24px,2.6vw,38px);line-height:1.15;letter-spacing:-.035em;margin:10px 0 16px}.presenter-card .next{font-size:16px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:16px}.presenter-card .next b{color:var(--ink);display:block;font-size:19px;margin-top:4px}.presenter-navigation{display:flex;gap:8px;margin:14px 0 24px}.presenter-navigation select{flex:1;min-width:0;background:#fff;border:1px solid #ddd3cb;border-radius:8px;font-size:12px;padding:0 10px;color:var(--ink)}.presenter-notes{display:flex;flex-direction:column;min-height:560px;height:calc(100dvh - 110px)}.presenter-notes textarea{width:100%;flex:1;min-height:200px;resize:none;border:1px solid var(--line);background:#fffdfb;border-radius:8px;padding:16px;font-size:var(--note-size);line-height:1.6;color:var(--ink)}.presenter-help{font-size:11px;color:var(--muted);line-height:1.6;margin:10px 0 0}
+@keyframes enter{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(min-width:950px) and (max-height:760px){.slide{padding-top:26px}.slide h2{font-size:clamp(36px,4.6vw,64px);margin:16px 0 22px}.cover h2{font-size:clamp(64px,8.5vw,120px)}.card{padding:20px}.card h3{margin:14px 0 8px}.pipeline article{padding-top:16px;padding-bottom:16px}.pipeline h3{margin:14px 0 8px}.img-slide img{max-height:56vh}.field textarea{min-height:60px}.field.wide textarea{min-height:90px}.levels .visual-number{font-size:42px}.frame-strip{margin:16px 0 4px}}
+@media(max-width:900px){.slide{padding:32px 28px 100px}.slide h2{font-size:clamp(36px,6.5vw,60px)}.three,.four,.five,.levels{grid-template-columns:1fr 1fr}.install-grid,.copy-list.grid{grid-template-columns:1fr}.card{padding:20px}.card p{font-size:15px}.cover h2{font-size:clamp(60px,12vw,110px)}.frames{opacity:.5;right:-8vw;top:10%;width:60vw;height:60vw}.cover-bottom{gap:25px}.cover .brand{width:240px}.controls #sectionName{display:none}.split,.practice-grid{grid-template-columns:1fr;gap:22px}.pipeline{grid-template-columns:1fr 1fr}.pipeline article:nth-child(2):after{display:none}.rules{columns:1}.presenter-grid{grid-template-columns:1fr}.presenter-notes{height:auto;min-height:420px}}
+@media(max-width:600px){.slide{padding:30px 22px 104px}.slide h2{font-size:39px;margin:24px 0}.eyebrow{font-size:9px}.cover h2{font-size:64px}.cover .lead{font-size:22px}.cover-bottom{align-items:flex-start;flex-direction:column;gap:22px}.cover-topics{border-left:0;padding-left:0}.cover .brand{width:220px}.quiet h2{font-size:42px}.statement-line{font-size:15px;gap:15px}.three,.two,.four,.five,.levels,.fields,.checklist,.pipeline{grid-template-columns:1fr}.pipeline article:after{display:none}.field.wide{grid-column:auto}.card h3{font-size:24px}.card p{font-size:16px}.question-band{padding:20px;font-size:24px}.takeaway{font-size:19px}.closing h2{font-size:44px}.closing-footer{flex-direction:column;align-items:flex-start}.controls{max-width:calc(100vw - 16px);gap:2px;padding:5px;bottom:14px}.controls button{padding:11px 8px;font-size:10px}.controls #slideCount{min-width:33px;font-size:10px}.control-divider{margin:0 1px}.controls #fullscreenBtn{max-width:56px;white-space:normal;padding:6px}.presenter-toolbar{align-items:flex-start;flex-direction:column}.timer-controls{width:100%}}
+@media print{.deck{height:auto;overflow:visible}.slide,.slide.active{display:flex!important;position:relative;min-height:100vh;height:auto;overflow:visible;break-after:page;animation:none;padding:40px;background:white;color:var(--ink)}.controls,.progress,.notes-panel,.presenter,.notice{display:none!important}.speaker-notes{display:none!important}.orange-slide .eyebrow,.orange-slide em,.orange-slide .visual-number,.orange-slide .card p{color:var(--orange-dark)}.orange-slide .card{color:var(--ink);border-color:var(--line)}}
+.result-btn{margin:12px 0 0 8px;background:transparent;color:var(--orange-dark);border:1px solid var(--orange-dark);border-radius:7px;padding:9px 14px;font-size:12px;font-weight:600;letter-spacing:.04em;cursor:pointer}
+.result-btn:hover{background:var(--soft)}
+.result-modal{border:0;padding:0;background:transparent;width:min(1280px,92vw);max-width:none;max-height:none;overflow:visible}
+.result-modal::backdrop{background:#130a05d9}
+.result-modal header{display:flex;justify-content:space-between;align-items:center;color:#fbe9df;margin-bottom:12px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.result-modal header button{background:#ffffff14;color:#fff;border:1px solid #ffffff30;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.result-modal header button:hover{background:#ff4e00;border-color:#ff4e00}
+.result-modal iframe,.result-modal video{display:block;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 120px);border:0;border-radius:12px;background:#0a0a0c;box-shadow:0 20px 80px #0008}
+.result-modal p{color:#fbe9dfaa;font-size:12px;margin:10px 0 0;text-align:right}
+.result-modal.vertical{width:fit-content;max-width:92vw}.result-modal.vertical header span{max-width:calc(100vh * 9 / 16 - 150px);font-size:11px}.result-modal.vertical video{width:auto;height:calc(100vh - 130px);aspect-ratio:9/16;max-height:none}
+.compose-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}.compose-actions .copy-btn.solo,.compose-actions .result-btn{margin:0}
+</style></head><body><main id="deck" class="deck" aria-label="Claude agora faz vídeos">
+
+<section class="slide cover" data-section="Abertura"><div class="eyebrow">AI Journey</div><h2>Claude agora<br>faz <em>vídeos</em></h2><p class="lead">Graças ao JavaScript. Do pedido ao MP4,<br>sem After Effects, sem gerador de vídeo.</p><div class="cover-bottom"><img class="brand" src="ai-journey-logo.svg" alt="AI Journey"><div class="cover-topics">Ponto de partida · Aquecimentos · Contexto<br>Como funciona · Quatro níveis · A skill animate · Práticas</div></div><div class="frames" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><span>frame a frame</span></div><aside class="speaker-notes" hidden>0–3 min. Pergunta de abertura: quem aqui já precisou de um vídeo curto e desistiu pelo custo ou pelo tempo? Hoje: entender como Claude faz vídeo escrevendo código, ver a skill animate e construir casos de uso juntos. Ordem da aula: primeiro a frase (Claude escreve código que desenha frames), logo em seguida dois aquecimentos sem skill que provam a frase ao vivo, e só depois contexto, peças, níveis e skill. Versão 120 min: abertura e ponto de partida 6, aquecimentos 1 e 2 sem skill 18, contexto 9, como funciona 8, vídeo da abertura 6 (mais 3 do som, opcional), quatro níveis 4, skill 14, exemplos 1 a 3 com a skill 45, fechamento 6. Versão 90 min: mesma abertura e aquecimentos, pular o slide do som, só o exemplo 1 nas práticas com a skill (15 min). Pré-requisitos da skill já instalados nesta máquina: testar o /animate antes do encontro.</aside></section>
+
+<section class="slide video-full" data-section="Abertura"><video id="showreel" src="claude-showreel-2026.mp4" data-autoplay playsinline preload="auto" aria-label="Showreel de 15 segundos feito inteiramente em código por Claude"></video><div class="video-hint">V: play / pause</div><aside class="speaker-notes" hidden>3–4 min. O vídeo toca sozinho ao entrar no slide, com som (se o navegador bloquear, pressionar V). Não falar nada durante os 15 s. Ao terminar, apenas uma frase: “Isso foi feito por Claude, sem nenhuma imagem, fonte ou áudio externos. Só código.” E avançar. O pedido completo e a explicação de como foi construído aparecem mais adiante, nos slides da seção Como funciona.</aside></section>
+
+<section class="slide quiet" data-section="Ponto de partida"><div class="eyebrow">Ponto de partida</div><h2>Claude não gera vídeo.<br><em>Claude escreve o código</em><br>que desenha cada frame.</h2><div class="statement-line"><span>Consequência</span><strong>Cada frame é previsível, editável e gratuito.</strong></div><div class="statement-line"><span>A seguir</span><strong>Dois aquecimentos para ver isso acontecer, sem skill nenhuma.</strong></div><aside class="speaker-notes" hidden>4–6 min. A frase que organiza a aula. Modelos de vídeo (Veo, Kling) geram pixels; aqui o modelo gera JavaScript que desenha. Isso muda três coisas: você controla cada detalhe, pode revisar o código como um texto e não paga por segundo gerado. Não explicar mais do que isso agora: os dois próximos exemplos mostram a frase acontecendo ao vivo. Contexto, peças e níveis vêm depois, com a turma já tendo visto. Fonte da abordagem: o repositório cth9191/animate.</aside></section>
+
+<section class="slide orange-slide" data-section="Práticas"><div class="eyebrow">Práticas</div><h2>Cinco exemplos, <em>do simples ao completo</em></h2><p class="lead">Cada exemplo adiciona uma peça à anterior. Os dois primeiros são agora, sem skill: um frame desenhado por código, depois esse código virando MP4. Os três últimos vêm depois de conhecer a skill, preenchidos com a turma.</p><div class="cards five"><article class="card"><span class="visual-number">1</span><h3>Uma frase em movimento</h3><p>Só HTML. Abrir no navegador.</p></article><article class="card"><span class="visual-number">2</span><h3>Do navegador ao MP4</h3><p>Render, quadro, correção.</p></article><article class="card"><span class="visual-number">3</span><h3>Explicativo de 30 s</h3><p>Primeiro /animate, com check-ins.</p></article><article class="card"><span class="visual-number">4</span><h3>História de 45 s</h3><p>Fatos com fonte, vários formatos.</p></article><article class="card"><span class="visual-number">5</span><h3>Reel com telas reais</h3><p>Screenshots, música, batida.</p></article></div><aside class="speaker-notes" hidden>6–8 min (versão 90 min: fazer 1, 2 e 3; versão 120 min: os cinco). Vir direto da frase do ponto de partida: “em vez de explicar, vamos ver”. Explicar a escada: cada exemplo acrescenta uma única ideia nova. 1: frame é função do tempo. 2: o loop de revisão com Playwright e ffmpeg. 3: a skill com seus check-ins. 4: formato história, fatos checados e vários formatos de tela. 5: assets reais e música própria. Os formulários dos exemplos com a skill começam sempre vazios, inclusive ao recarregar a página. Exportar ao final (botão Exportar notas) para não perder. Como conduzir: projetar o Claude Code ao lado do deck; pedir, enquanto roda, que a turma anote o que esperava ver; comparar com o resultado.</aside></section>
+
+<section class="slide practice" data-section="Práticas"><div class="eyebrow">Exemplo 1 · Aquecimento · 5 min</div><h2>Uma frase em movimento</h2><div class="split top"><div><p class="lead">O menor vídeo possível: uma frase entrando palavra por palavra. Sem skill, sem render. Só código que desenha cada frame, aberto no navegador.</p><div class="suggestion"><strong>O que este exemplo ensina</strong>Um frame é uma função do tempo. Dá para ver o código, trocar a frase e assistir de novo.</div><div class="suggestion"><strong>Variação em 1 minuto</strong>Pedir para trocar o quique por um fade, ou a cor por outra, e recarregar.</div></div><div><div class="eyebrow">O pedido, no Claude Code</div><pre class="prompt-box">Crie um arquivo index.html com um &lt;canvas&gt;
+1920×1080 que anima, em 8 segundos, a frase
+"Vídeo virou código" entrando palavra
+por palavra, com um quique suave. Fundo escuro,
+texto laranja #ff4e00, fonte do sistema.
+Sem bibliotecas externas. Abra o arquivo
+no navegador quando terminar.</pre><button class="copy-btn solo" type="button" data-copy="Crie um arquivo index.html com um &lt;canvas&gt; 1920×1080 que anima, em 8 segundos, a frase &quot;Vídeo virou código&quot; entrando palavra por palavra, com um quique suave. Fundo escuro, texto laranja #ff4e00, fonte do sistema. Sem bibliotecas externas. Abra o arquivo no navegador quando terminar.">Copiar prompt</button><button class="result-btn" type="button" data-result="assets/exemplo-1-frase.html" data-result-title="Exemplo 1 · Resultado gerado por Claude">▶ Ver resultado</button><p class="caption">Tempo típico: 1 a 2 minutos até o arquivo abrir. Para personalizar, troque a frase pela da turma.</p></div></div><aside class="speaker-notes" hidden>8–14 min. O pedido já vem pronto com “Vídeo virou código”: clicar em Copiar prompt e colar no Claude Code. Para comparar depois, ou se o ambiente falhar, o botão Ver resultado abre a versão já gerada em um modal (R reinicia, Esc fecha). Se a turma quiser, trocar a frase por uma dela (nome da empresa e um slogan curto) antes de colar; usar a primeira sugestão boa, sem votação longa. Enquanto o Claude escreve, mostrar o código surgindo e apontar a função que recebe o tempo. Quando abrir, pedir que reparem no quique. Depois, a variação: “troque o quique por um fade” e recarregar. Isso prova a frase do ponto de partida sem precisar de render: Claude não gerou vídeo, escreveu uma função que desenha. Se o navegador não abrir sozinho, abrir o index.html manualmente.</aside></section>
+
+<section class="slide practice" data-section="Práticas"><div class="eyebrow">Exemplo 2 · Aquecimento · 10 min</div><h2>Do navegador ao MP4</h2><div class="split top"><div><p class="lead">O mesmo arquivo do exemplo 1, agora virando um vídeo de verdade, com um quadro de revisão no meio do caminho.</p><div class="suggestion"><strong>O que este exemplo ensina</strong>Frames desenhados por código viram vídeo de verdade. E o loop que organiza o resto da aula: renderizar, olhar, corrigir. Claude captura um quadro, vê o texto cortado e conserta antes de exportar.</div><div class="suggestion"><strong>Pergunta-guia</strong>O que Claude achou no quadro capturado que nós não tínhamos visto?</div></div><div><div class="eyebrow">O pedido, no Claude Code</div><pre class="prompt-box">Agora transforme esse index.html em MP4:
+capture 30 quadros por segundo com Playwright
+e junte com ffmpeg. Antes de exportar, capture um
+quadro em 2 s e em 6 s e me mostre. Se algum
+texto estiver cortado ou pequeno demais,
+corrija e refaça a captura. Entregue o arquivo
+final em renders/frase.mp4.</pre><button class="copy-btn solo" type="button" data-copy="Agora transforme esse index.html em MP4: capture 30 quadros por segundo com Playwright e junte com ffmpeg. Antes de exportar, capture um quadro em 2 s e em 6 s e me mostre. Se algum texto estiver cortado ou pequeno demais, corrija e refaça a captura. Entregue o arquivo final em renders/frase.mp4.">Copiar prompt</button><button class="result-btn" type="button" data-result="assets/exemplo-2-frase.mp4" data-result-title="Exemplo 2 · MP4 gerado por Claude">▶ Ver resultado</button><p class="caption">Tempo típico: 3 a 5 minutos, incluindo a correção.</p></div></div><aside class="speaker-notes" hidden>14–24 min. Rodar na mesma sessão do exemplo 1. Enquanto renderiza, explicar o que acontece: Chromium invisível fotografa cada quadro, ffmpeg junta. Quando o quadro capturado aparecer, parar e perguntar o que está errado antes de o Claude dizer. Se nada estiver errado, forçar: “diminua o canvas para 1080×1080 e refaça a captura”, para que apareça texto cortado e o loop fique visível. Abrir o MP4 no final e comparar com o navegador. Para mostrar só o resultado, ou se o render falhar, o botão Ver resultado abre o MP4 já gerado em um modal (R reinicia, Esc fecha). Se der erro de ffmpeg ou Playwright, o próprio Claude indica o comando; pré-requisitos já estão instalados nesta máquina. Fechar com a ponte: a turma já viu o mecanismo funcionando; agora vale perguntar por que isso importa, onde se encaixa entre os outros caminhos de vídeo com IA e o que exatamente aconteceu por baixo.</aside></section>
+
+<section class="slide" data-section="Contexto"><div class="eyebrow">Contexto</div><h2>Por que vídeo, por que agora?</h2><div class="cards three"><article class="card"><span class="visual-number">1</span><h3>Vídeo curto virou a linguagem</h3><p>Explicar um produto, uma ideia ou um resultado em 30 a 60 segundos é hoje a forma padrão de comunicar, dentro e fora da empresa.</p></article><article class="card"><span class="visual-number">2</span><h3>Produzir ainda é caro</h3><p>Motion design exige ferramenta, especialista e dias de ida e volta. A maioria dos times simplesmente não faz.</p></article><article class="card accent-card"><span class="visual-number">3</span><h3>Código ficou barato</h3><p>Claude escreve, roda e revisa código com autonomia. Se vídeo pode ser código, vídeo também ficou barato.</p></article></div><aside class="speaker-notes" hidden>24–28 min. Voltar da prática para o porquê. Trazer exemplos do grupo: onboarding, lançamento interno, explicação de indicador, aula. Perguntar o que impede hoje: ferramenta, pessoa, tempo. O argumento: não é que a IA desenha melhor que um motion designer; é que o custo de uma primeira versão caiu para quase zero.</aside></section>
+
+<section class="slide" data-section="Contexto"><div class="eyebrow">Contexto</div><h2>Três caminhos para vídeo com IA</h2><div class="cards three"><article class="card"><h3>Gerar pixels</h3><p>Veo, Kling, Higgsfield. Realismo e cenas filmadas. Resultado variável, custo por segundo e pouco controle sobre texto e dados.</p></article><article class="card"><h3>Editar o que existe</h3><p>Cortes, legendas, dublagem, reframing. Ótimo para gravações reais. Não cria nada do zero.</p></article><article class="card accent-card"><h3>Programar o vídeo</h3><p>Remotion, Manim, canvas. Cada frame é uma função do tempo. Determinístico, editável, ideal para explicativos, dados e motion de texto.</p></article></div><p class="takeaway">Hoje ficamos no terceiro caminho. Os outros continuam valendo para outros problemas.</p><aside class="speaker-notes" hidden>28–31 min. Posicionar sem desmerecer: geração de pixels é a escolha para pessoas e cenas realistas. Programar o vídeo é a escolha quando o conteúdo é informação: texto, formas, gráficos, fluxos, histórias ilustradas. Remotion (React) e Manim (Python) já existiam; a novidade é que o modelo escreve e revisa tudo sozinho.</aside></section>
+
+<section class="slide" data-section="Contexto"><div class="eyebrow">Contexto · O que já está sendo feito</div><h2>Centenas de vídeos, <em>só código</em></h2><p class="lead">A galeria Skillry reúne 418 vídeos feitos com Claude Opus 5.5, cada um com o prompt que o autor publicou. Nenhum editor de vídeo.</p><div class="cards four"><article class="card"><span class="visual-number">229</span><h3>Motion graphics</h3><p>Lançamentos, reels de marca, showreels.</p></article><article class="card"><span class="visual-number">68</span><h3>Explicativos</h3><p>Como algo funciona, passo a passo.</p></article><article class="card"><span class="visual-number">56</span><h3>Cenas 3D</h3><p>Objetos e mundos que giram e se abrem.</p></article><article class="card"><span class="visual-number">65</span><h3>Jogos</h3><p>Pequenos jogos jogáveis no navegador.</p></article></div><p class="caption">skillry.dev/ai-videos/opus-5-5 · contagem em 20/10/2026 · ferramentas relatadas pelos autores: canvas, Remotion, HyperFrames, Three.js.</p><aside class="speaker-notes" hidden>31–33 min. Mostrar que não é um truque isolado: há uma comunidade produzindo lançamentos de produto, explicativos e cenas 3D só com código. Abrir a galeria ao vivo se houver internet e escolher um motion graphics e um explicativo para comentar. Reforçar: os autores dizem “sem editor de vídeo, só código”; alguns relatam que precisaram de vários prompts. Fonte: https://skillry.dev/ai-videos/opus-5-5 (galeria comercial; os prompts são públicos).</aside></section>
+
+<section class="slide" data-section="Como funciona"><div class="eyebrow">Como funciona</div><h2>Quatro peças, nenhuma delas nova</h2><div class="pipeline"><article><span class="step">1</span><h3>Pedido</h3><p>Assunto, duração, formato e estilo. Claude escreve o roteiro em batidas.</p></article><article><span class="step">2</span><h3>JavaScript + canvas</h3><p>Um arquivo HTML. Uma função desenha o frame para cada instante <code class="inline">t</code>.</p><code>draw(t)</code></article><article><span class="step">3</span><h3>Playwright</h3><p>Um navegador sem janela abre o arquivo e fotografa frame por frame.</p><code>30 fps × 45 s = 1350 frames</code></article><article><span class="step">4</span><h3>FFmpeg</h3><p>Junta os frames e o áudio em um MP4 pronto para compartilhar.</p><code>renders/share.mp4</code></article></div><div class="frame-strip" aria-hidden="true"><i style="--x:8" data-t="t=0,0s"></i><i style="--x:22" data-t="t=0,5s"></i><i style="--x:38" data-t="t=1,0s"></i><i style="--x:52" data-t="t=1,5s"></i><i style="--x:66" data-t="t=2,0s"></i></div><aside class="speaker-notes" hidden>33–38 min. Nomear o que a turma acabou de ver nos aquecimentos. O ponto didático: canvas é a área de desenho do navegador; Playwright é uma ferramenta de automação de navegador; FFmpeg é o canivete suíço de vídeo. Todos gratuitos e abertos. A novidade está em quem escreve e opera: o modelo. A faixa de frames ilustra o conceito de frame como função do tempo.</aside></section>
+
+<section class="slide" data-section="Como funciona"><div class="eyebrow">Como funciona</div><h2>Por que isso funciona tão bem?</h2><div class="cards four"><article class="card"><span class="visual-number">01</span><h3>Código é o ponto forte</h3><p>Vídeo virou código.</p></article><article class="card"><span class="visual-number">02</span><h3>Mesmo código, mesmo frame</h3><p>Sempre. Sem surpresas.</p></article><article class="card"><span class="visual-number">03</span><h3>Texto sai certo</h3><p>Sem letra distorcida, sem dedo a mais.</p></article><article class="card accent-card"><span class="visual-number">04</span><h3>Claude vê o resultado</h3><p>Captura um quadro, compara, corrige.</p></article></div><aside class="speaker-notes" hidden>38–41 min. Quatro razões, uma frase cada. 01: Claude é muito bom em código, e vídeo virou um problema de código. 02: cada frame é determinístico; mesmo código, mesmo resultado, dá para refazer um único quadro. 03: texto, formas, gráficos e easing são nativos do canvas; geradores de pixels erram letras e mãos, aqui isso não existe. 04: Claude captura um quadro, compara com o pedido, corrige e repete; esse loop é o que a turma viu no exemplo 2 e é o que separa um resultado aceitável de um resultado bom.</aside></section>
+
+<section class="slide" data-section="O vídeo da abertura" style="background:var(--soft)"><div class="eyebrow">O vídeo da abertura</div><h2>Quinze segundos. <em>Seis linhas de pedido.</em></h2><div class="split top" style="align-items:center"><pre class="prompt-box" style="margin:0;font-size:clamp(14px,1.35vw,20px)"><b>/animate</b> Crie um vídeo dinâmico de motion
+graphics de 15 segundos que demonstre o quanto
+você é um designer de animação incrível, como
+se fosse seu portfólio profissional para um
+currículo. Dê o seu máximo. Não utilize
+nenhuma skill.</pre><div class="reverse-lines"><p>Sem referências. <span>Nenhuma imagem de exemplo.</span></p><p>Sem estilo escolhido. <span>Claude decidiu paleta, tipografia e ritmo.</span></p><p>Sem skill. <span>Só o pedido e as ferramentas da máquina.</span></p><p>Zero arquivos de mídia. <span>1920×1080, 60 fps, imagem e som em código.</span></p></div></div><aside class="speaker-notes" hidden>41–43 min. Relembrar o vídeo da abertura e revelar o pedido. Pausa para a reação. Perguntar: o que vocês acham que existe por trás disso? Pedir que lembrem de três coisas do vídeo: as letras que quicam, as formas que viram outras e o silêncio antes do impacto final. Resposta nos dois próximos slides: nenhum arquivo de imagem ou áudio, só código. Se quiserem rever, voltar ao slide 2 e pressionar V.</aside></section>
+
+<section class="slide" data-section="O vídeo da abertura"><div class="eyebrow">O vídeo da abertura · Como foi construído</div><h2>Três etapas, tudo em código</h2><div class="cards three compact"><article class="card"><span class="visual-number">1</span><h3>A imagem é uma fórmula do tempo</h3><p>Uma página com uma única área de desenho e uma função que recebe um instante, por exemplo 7,25 s, e desenha aquele quadro do zero. Nenhum quadro fica guardado.</p><p>O “quique” das letras é uma mola calculada. O desfoque de movimento vem de desenhar cada quadro 4 vezes em instantes vizinhos e sobrepor, como o obturador aberto de uma câmera. As transições são metamorfoses: o O vira círculo, o círculo vira partículas, as partículas viram cubos.</p></article><article class="card"><span class="visual-number">2</span><h3>Um navegador invisível fotografa cada quadro</h3><p>Um script abre a página em um Chromium sem tela e pede o quadro 1, o 2, o 3... São 900 fotografias, repartidas entre 4 processos, em cerca de 2,5 minutos.</p><p>A aleatoriedade usa uma semente fixa, então o quadro 412 sai sempre igual. Dá para renderizar fora de ordem e em paralelo. No fim, o FFmpeg junta as fotos em um vídeo a 60 quadros por segundo.</p></article><article class="card accent-card"><span class="visual-number">3</span><h3>O som é uma receita matemática</h3><p>Um segundo script calcula a onda sonora número a número: 48 mil por segundo, por canal. Cada instrumento é uma receita curta: o bumbo é uma nota grave que despenca; o chimbal é ruído com corte seco; o pad são três notas desafinadas com ataque lento.</p><p>A trilha nasce do mesmo roteiro da imagem: uma batida a cada meio segundo, cada som no instante exato do evento visual.</p></article></div><aside class="speaker-notes" hidden>43–47 min. Explicação não técnica, baseada no relato de construção do showreel. Analogias: flipbook em que cada página é calculada na hora; câmera com obturador aberto; receita de bolo para cada instrumento. O ponto a enfatizar: imagem e som saem do mesmo roteiro, por isso batem no mesmo instante.</aside></section>
+
+<section class="slide" data-section="O vídeo da abertura"><div class="eyebrow">O vídeo da abertura · O som</div><h2>Cada instrumento é uma <em>receita</em></h2><table class="recipes"><thead><tr><th>Som</th><th>Receita, em palavras</th></tr></thead><tbody><tr><td>Bumbo</td><td>Uma nota grave que despenca de tom em milissegundos, com um clique de ruído no ataque.</td></tr><tr><td>Chimbal e palmas</td><td>Ruído só nos agudos, com corte muito curto. A palma são três rajadas quase juntas.</td></tr><tr><td>Baixo e plucks</td><td>Ondas serrilhadas e filtradas; os plucks, duas levemente desafinadas com um filtro que fecha rápido.</td></tr><tr><td>Pad</td><td>Três ondas desafinadas por nota, com ataque lento: os acordes longos.</td></tr><tr><td>Whoosh, riser e impacto</td><td>Ruído com filtro que abre ou fecha, uma nota que sobe de tom; no impacto, bumbo mais sub-grave com cauda.</td></tr><tr><td>Reverb</td><td>Ecos com realimentação que simulam uma sala.</td></tr></tbody></table><p class="caption">Trilha e imagem nascem do mesmo roteiro: uma batida a cada 0,5 s, cada som no instante do evento visual.</p><aside class="speaker-notes" hidden>47–50 min. Slide opcional, se o grupo se interessar pelo som. Usar os nomes em palavras, sem Hz. O ponto final conecta com a regra “pronto é medido”: o modelo não ouve, mas mede; o ouvido humano fecha o ciclo.</aside></section>
+
+<section class="slide quiet" data-section="Os quatro níveis"><div class="eyebrow">Os quatro níveis</div><h2>Do pedido solto<br>à <em>skill reutilizável</em></h2><p class="lead">Cada nível resolve uma limitação do anterior.</p><div class="levels"><article class="card"><span class="visual-number">1</span><h3>Prompting</h3><p>Pedir um HTML animado.</p></article><article class="card"><span class="visual-number">2</span><h3>Ferramentas + loop</h3><p>Renderizar, olhar, corrigir.</p></article><article class="card"><span class="visual-number">3</span><h3>Referências</h3><p>Copiar um estilo, não um vídeo.</p></article><article class="card"><span class="visual-number">4</span><h3>Skills</h3><p>Empacotar o processo inteiro.</p></article></div><aside class="speaker-notes" hidden>50–52 min. Mapa da seção. Os níveis 1 e 2 a turma já praticou nos aquecimentos: pedir um HTML (exemplo 1) e renderizar, olhar e corrigir (exemplo 2). O nível 3 fica só neste mapa: entregar uma referência visual e Claude medir o estilo; lembrar que referência inspira, não se copia cena ou marca de terceiros. O próximo slide é o nível 4, a skill.</aside></section>
+
+<section class="slide" data-section="Os quatro níveis"><div class="eyebrow">Skills</div><h2>Empacotar o processo inteiro</h2><div class="split top"><div><p class="lead">Uma skill é uma pasta com instruções, regras e ferramentas que Claude Cowork carrega quando você pede um vídeo.</p><pre><b>/animate</b> [PROMPT]</pre></div><div class="card accent-card"><div class="eyebrow">O que você ganha</div><p>Os níveis 1, 2 e 3 acontecem sozinhos, sempre na mesma ordem, com check-ins antes de gastar tempo animando.</p><div class="eyebrow" style="margin-top:22px">Onde está</div><p>github.com/cth9191/animate · MIT · gratuita</p></div></div><aside class="speaker-notes" hidden>52–54 min. Relembrar o conceito de skill visto em encontros anteriores: conhecimento empacotado e reutilizável. Aqui a skill traz gramática de história, estilos, ferramentas de render e revisão medida. Transição: vamos abrir o repositório.</aside></section>
+
+<section class="slide" data-section="A skill animate"><div class="eyebrow">A skill animate</div><h2>O que vem na caixa</h2><div class="cards three"><article class="card"><h3>Gramática de história</h3><p>8 formatos curtos (história, missão, lista...). Regras: uma constante, cor significa uma coisa, silêncio antes do clímax, o fim é o começo transformado.</p></article><article class="card"><h3>Kit de desenho e som</h3><p>Aleatoriedade com semente, linha que “ferve” a cada 2 frames, câmeras, transições por metamorfose de formas e trilha sintetizada em código.</p></article><article class="card"><h3>Ferramentas</h3><p>build, still, storyboard, export, review, compare. A revisão mede corte na batida, texto cortado, loudness e ancoragem do herói.</p></article></div><p class="takeaway">Também: voz narrada com timing por palavra, sua própria música mapeada em batidas, screenshots do seu produto e todos os formatos (9:16, 1:1, 4:5, 16:9) de um só vídeo.</p><aside class="speaker-notes" hidden>54–57 min. Fonte: README e SKILL.md do repositório (lidos em 20/10/2026). Criado em 04/10/2026, 864 estrelas em duas semanas. O exemplo completo incluído: história da IA em 60 s, 15 eras de Turing a Claude Code, estilo papel recortado. Não prometer que tudo funciona de primeira: é um projeto de duas semanas, em evolução.</aside></section>
+
+
+
+<section class="slide" data-section="A skill animate"><div class="eyebrow">A skill animate</div><h2>6 passos</h2><table><thead><tr><th>Passo</th><th>O que você vê</th><th>O que você decide</th></tr></thead><tbody><tr><td>0 · Intake</td><td>Perguntas: assunto, formatos, voz, estilo, herói, música, produto.</td><td>Respostas e um estilo ou referências.</td></tr><tr><td>1 · Story check</td><td>Formato escolhido e tabela numerada de batidas, fatos checados na web.</td><td>Aprovar ou mudar batidas.</td></tr><tr><td>2 · Look check</td><td>2 a 4 frames no estilo, em tamanho real.</td><td>Aprovar frame a frame.</td></tr><tr><td>3 · Storyboard</td><td>Cada batida como frame-chave, com som e transição.</td><td>Aprovar ou rejeitar por painel.</td></tr><tr><td>4 · Build</td><td>Animação, render e revisão medida.</td><td>Nada: é automático.</td></tr><tr><td>5 · Delivery</td><td>MP4 e os números da revisão.</td><td>Notas para uma rodada de revisão.</td></tr></tbody></table><aside class="speaker-notes" hidden>57–60 min. A lição de processo vale além de vídeo: aprovar coisas baratas (texto, 3 frames, storyboard) antes de gastar na coisa cara (animar). A regra número um da skill é não animar antes do storyboard aprovado. Isso será o roteiro das práticas.</aside></section>
+
+
+
+<section class="slide" data-section="A skill animate"><div class="eyebrow">A skill animate</div><h2>Instalar e usar</h2><div class="install-grid"><div><div class="eyebrow">Caminho 1 · No terminal</div><pre><i># Node 18+, Playwright, ffmpeg</i>
+npm i -g playwright
+npx playwright install chromium
+
+<i># dentro do Claude Code</i>
+<b>/plugin</b> marketplace add cth9191/animate
+<b>/plugin</b> install animate@animate</pre></div><div class="card accent-card"><div class="eyebrow">Caminho 2 · Sem terminal, no Claude Cowork</div><p style="margin:12px 0 14px">Envie o link público do repositório e peça ajuda. O Cowork verifica o que falta, instala e testa.</p><pre class="prompt-box" style="margin:0;font-size:clamp(12px,1.05vw,15px);white-space:pre-wrap">Me ajude a configurar esta skill de vídeo no meu computador: https://github.com/cth9191/animate
+
+Verifique Node, Playwright com Chromium e ffmpeg, instale o que faltar e, no final, rode o demo de um estilo para confirmar.</pre><button class="copy-btn solo" type="button" data-copy="Me ajude a configurar esta skill de vídeo no meu computador: https://github.com/cth9191/animate
+
+Verifique Node, Playwright com Chromium e ffmpeg, instale o que faltar e, no final, rode o demo de um estilo para confirmar.">Copiar mensagem</button></div></div></div><p class="caption">Os vídeos ficam em pieces/&lt;nome&gt;/ no seu projeto. Voz opcional: Python com faster-whisper e o conector ElevenLabs.</p><aside class="speaker-notes" hidden>60–62 min. Dois caminhos para o mesmo resultado. Caminho 1: comandos conforme o README, para quem usa terminal. Caminho 2: no Claude Cowork, colar a mensagem com o link público do repositório; o agente confere Node, Playwright e ffmpeg, instala o que falta (nesta máquina o ffmpeg veio pelo pacote npm ffmpeg-static, porque não havia Homebrew) e roda o demo. Sugerir que a turma faça isso durante o intervalo ou em casa, e traga o resultado do demo como comprovação. Alternativa manual: copiar a pasta plugins/animate/skills/animate para ~/.claude/skills/animate.</aside></section>
+
+<section class="slide" data-section="A skill animate"><div class="eyebrow">A skill animate</div><h2>Regras que o autor chama de inegociáveis</h2><div class="rules"><p>Nada de animar antes do storyboard aprovado.<span>Uma história ou visual errados custam um build inteiro.</span></p><p>Olhar referências antes de desenhar.<span>As suas, ou o sample e o demo do estilo.</span></p><p>Todo fato na tela é checado na web.<span>Nunca dizer “primeiro” sem fonte.</span></p><p>Um arquivo, tudo em código.<span>Sem imagens, áudios ou fontes externas. Exceções: seus próprios assets e sua música.</span></p><p>Determinístico.<span>Aleatoriedade com semente; nunca o relógio.</span></p><p>Referência fica local.<span>Não se copia código nem se cita o artista sem pedido.</span></p><p>“Pronto” é medido.<span>A revisão passa e os números são reportados, não “ficou bom”.</span></p><p>Perguntar com opções.<span>Sempre com uma recomendação padrão para responder em um clique.</span></p></div><aside class="speaker-notes" hidden>62–64 min. Fonte: seção Non-negotiables do SKILL.md. Vale como modelo para qualquer skill que o grupo venha a escrever: regras curtas, verificáveis, com o porquê. Pergunta: quais dessas regras valem para o trabalho de vocês, fora de vídeo?</aside></section>
+
+<section class="slide video-slide" data-section="A skill animate"><div class="eyebrow">A skill animate · Em ação</div><h2>Do Big Bang à era da IA, <em>em 50 segundos</em></h2><div class="video-layout"><div class="video-wrap"><video id="skillExample" src="assets/exemplo-skill.mp4" controls playsinline preload="metadata" aria-label="Do Big Bang à era da IA: vídeo de 50 segundos gerado com a skill animate"></video><p class="caption">1920×1080 · 24 fps · 50 s · papel recortado · 12 eras ligadas por metamorfoses, um corte seco no clímax, trilha sintetizada. Clique no vídeo ou pressione V.</p></div><div><div class="eyebrow">O pedido</div><pre class="prompt-box" style="white-space:pre-wrap"><b>/animate</b> uma explicação de 50 segundos sobre o surgimento do universo, do Big Bang até a era da IA, estilo papel recortado, 16:9, sem voz, para abrir um encontro do AI Journey.</pre><div class="eyebrow" style="margin-top:18px">O que a skill fez antes de animar</div><p class="caption" style="font-size:14px">Escolheu o formato “história” e um fio condutor: a faísca laranja nasce no Big Bang com 3 raios e ganha um a cada era, até 12. Montou a tabela de 12 batidas com datas e fontes, desenhou o storyboard (assets/exemplo-skill-storyboard.png) e só então animou. A revisão medida passou: cortes na grade, silêncio de 2 s antes da pancada mais alta, nenhum texto cortado.</p></div></div><aside class="speaker-notes" hidden>64–66 min. Tocar o vídeo com som (50 s). Depois abrir o storyboard em assets/exemplo-skill-storyboard.png e, se houver tempo, o brief em animate/pieces/universo/brief.md, com a tabela de batidas e as fontes de cada data. O contraste com o showreel da abertura: lá, um pedido só e nenhum processo; aqui, formato, fio condutor, batidas, storyboard e revisão medida antes do render. O ponto fraco declarado no LOG: os planetas são pequenos na era do Sol. Ninguém ouviu a trilha antes de você: ela foi validada por medição; conferir o enter em 43 s.</aside></section>
+
+<section class="slide quiet" data-section="Práticas"><div class="eyebrow">Práticas</div><h2>Agora, <em>com a skill</em></h2><p class="lead">Três exemplos, preenchidos com a turma e aprovados em etapas antes de animar.</p><div class="levels" style="grid-template-columns:repeat(3,1fr)"><article class="card"><span class="visual-number">1</span><h3>Explicativo de 30 s</h3><p>Primeiro /animate, com check-ins.</p></article><article class="card"><span class="visual-number">2</span><h3>História de 45 s</h3><p>Fatos com fonte, vários formatos.</p></article><article class="card"><span class="visual-number">3</span><h3>Reel com telas reais</h3><p>Screenshots, música, batida.</p></article></div><aside class="speaker-notes" hidden>66–67 min. Ponte: os aquecimentos mostraram o mecanismo; agora a skill organiza o processo. Relembrar a regra número um: nada de animar antes do storyboard aprovado. Projetar o Claude Code ao lado do deck.</aside></section>
+
+<section class="slide practice" data-section="Práticas"><div class="eyebrow">Exemplo 1 · Explicar um conceito · 15 min</div><h2>Um explicativo de 30 segundos</h2><div class="practice-grid"><div><p class="lead">Algo que vocês explicam toda semana e cansaram de explicar. Primeiro uso da skill.</p><div class="suggestion"><strong>Sugestão de partida</strong>Um indicador, um processo interno ou uma regra de negócio. Estilo matemática ou sketchbook. Formato 16:9 para reunião, 9:16 para celular.</div><div class="suggestion"><strong>Pergunta-guia</strong>Qual é a única coisa que a pessoa precisa lembrar depois de assistir?</div></div><div class="fields"><div class="field"><label for="p1-caso">Caso de uso</label><textarea id="p1-caso" autocomplete="off" data-persist placeholder="Ex.: explicar o que é churn para o time comercial"></textarea></div><div class="field"><label for="p1-publico">Público e canal</label><textarea id="p1-publico" autocomplete="off" data-persist placeholder="Quem assiste e onde"></textarea></div><div class="field"><label for="p1-estilo">Estilo e formato</label><textarea id="p1-estilo" autocomplete="off" data-persist placeholder="Ex.: matemática, 16:9, 30 s, sem voz"></textarea></div><div class="field"><label for="p1-nao">O que não pode acontecer</label><textarea id="p1-nao" autocomplete="off" data-persist placeholder="Ex.: nada de jargão, nenhum número inventado"></textarea></div><div class="field wide"><label for="p1-prompt">O pedido completo · monta sozinho, dá para editar</label><textarea id="p1-prompt" autocomplete="off" data-persist data-composed="p1" placeholder="/animate ... (preencha os campos acima)"></textarea><div class="compose-actions"><button class="copy-btn solo" type="button" data-copy-from="p1-prompt">Copiar pedido</button><button class="result-btn" type="button" data-recompose="p1">Remontar dos campos</button><button class="result-btn" type="button" data-clear="p1">Limpar</button><button class="result-btn" type="button" data-result="assets/pratica-skill-1.mp4" data-result-title="Exemplo 1 · Coração humano em 3D">▶ Ver resultado</button></div></div></div></div><aside class="speaker-notes" hidden>67–82 min. COMO CONDUZIR: perguntar “o que vocês explicam toda semana?”; anotar 3 respostas no campo Caso de uso; escolher a mais concreta (a que cabe em uma frase). Preencher os campos em voz alta, um por vez, e só então montar o pedido.
+
+SUGESTÃO DE PREENCHIMENTO, se a turma travar:
+• Caso de uso: explicar o que é churn para o time comercial.
+• Público e canal: vendedores novos, no onboarding, assistindo no celular.
+• Estilo e formato: matemática, 9:16, 30 s, sem voz, texto grande.
+• O que não pode acontecer: nenhum número inventado; só a fórmula e um exemplo com 100 clientes.
+• Pedido completo: /animate um explicativo de 30 segundos sobre o que é churn, para vendedores novos, estilo matemática, vertical 9:16, sem voz. Mostre a fórmula (clientes perdidos ÷ clientes no início do mês) e um exemplo com 100 clientes e 5 perdidos. Texto grande, uma ideia por cena. Nenhum dado além desse exemplo.
+
+AO RODAR: a skill vai fazer perguntas de intake; responder com o que está nos campos. Parar no story check: ler a tabela de batidas com a turma e mudar pelo menos uma batida de propósito, para mostrar que é barato. Aprovar o look e o storyboard por número de painel. Deixar o build rodando (3 a 6 min) e avançar para o exemplo 2 enquanto isso.</aside></section>
+
+<section class="slide practice" data-section="Práticas"><div class="eyebrow">Exemplo 2 · Contar uma história · 15 min</div><h2>A história de algo em 45 segundos</h2><div class="practice-grid"><div><p class="lead">Empresa, produto, projeto ou carreira: uma cronologia com um fio condutor.</p><div class="suggestion"><strong>Sugestão de partida</strong>Formato “história”: eras ligadas por metamorfoses, um elemento constante que muda a cada era. Estilo papel recortado ou risografia.</div><div class="suggestion"><strong>Pergunta-guia</strong>Qual é o elemento que aparece em todas as cenas e termina transformado?</div></div><div class="fields"><div class="field"><label for="p2-caso">Caso de uso</label><textarea id="p2-caso" autocomplete="off" data-persist placeholder="Ex.: 10 anos da empresa para o evento de fim de ano"></textarea></div><div class="field"><label for="p2-publico">Público e canal</label><textarea id="p2-publico" autocomplete="off" data-persist placeholder="Quem assiste e onde"></textarea></div><div class="field"><label for="p2-estilo">Estilo e formato</label><textarea id="p2-estilo" autocomplete="off" data-persist placeholder="Ex.: papel recortado, 16:9 e 9:16, 45 s, música própria"></textarea></div><div class="field"><label for="p2-fio">Fio condutor e eras</label><textarea id="p2-fio" autocomplete="off" data-persist placeholder="O elemento constante e as 5 a 8 eras"></textarea></div><div class="field wide"><label for="p2-prompt">O pedido completo · monta sozinho, dá para editar</label><textarea id="p2-prompt" autocomplete="off" data-persist data-composed="p2" placeholder="/animate ... (preencha os campos acima)"></textarea><div class="compose-actions"><button class="copy-btn solo" type="button" data-copy-from="p2-prompt">Copiar pedido</button><button class="result-btn" type="button" data-recompose="p2">Remontar dos campos</button><button class="result-btn" type="button" data-clear="p2">Limpar</button><button class="result-btn" type="button" data-result="assets/pratica-skill-2.mp4" data-result-title="Exemplo 2 · Próximos 30 anos no espaço · vídeo de @theSethian">▶ Ver resultado</button></div></div></div></div><aside class="speaker-notes" hidden>82–97 min. O QUE ESTE EXEMPLO ACRESCENTA: formato “história” (eras ligadas por metamorfoses), fatos com fonte e dois formatos de tela de um só vídeo.
+
+COMO CONDUZIR: pedir uma história que alguém da turma conheça bem, com datas. Construir o fio condutor juntos: “qual objeto aparece em todas as cenas e termina transformado?”. Lembrar que a skill checa cada fato na web e lista a fonte no brief; datas erradas voltam.
+
+SUGESTÃO DE PREENCHIMENTO, se a turma travar:
+• Caso de uso: os 10 anos da empresa, para o evento de fim de ano.
+• Público e canal: todos os colaboradores, no telão e depois no WhatsApp.
+• Estilo e formato: papel recortado, 16:9 e 9:16, 45 s, trilha sintetizada pela skill.
+• Fio condutor e eras: uma semente que vira árvore; 6 eras: fundação, primeiro cliente, primeira sede, crise, virada, hoje.
+• Pedido completo: /animate a história de [empresa] em 45 segundos, formato história, estilo papel recortado, 16:9 e 9:16. Fio condutor: uma semente que cresce a cada era e termina como árvore. Seis eras: [listar com ano]. Trilha sintetizada, silêncio antes da última cena.
+
+AO RODAR: no story check, conferir a lista de fontes do brief. Se um fato estiver sem fonte, pedir para remover. Aprovar o look com dois frames e seguir ao storyboard. Deixar o build rodando e avançar.</aside></section>
+
+<section class="slide practice" data-section="Práticas"><div class="eyebrow">Exemplo 3 · Mostrar o produto · 15 min</div><h2>Um reel de lançamento com telas reais</h2><div class="practice-grid"><div><p class="lead">Um site, um app ou um recurso novo, com screenshots de verdade dentro do estilo.</p><div class="suggestion"><strong>Sugestão de partida</strong>Formato “missão”: cortes na batida da música. Estilo isométrico ou pixel. Vertical e quadrado para redes, 16:9 para o site.</div><div class="suggestion"><strong>Pergunta-guia</strong>Qual tela merece ser o clímax, depois do silêncio?</div></div><div class="fields"><div class="field"><label for="p3-caso">Caso de uso</label><textarea id="p3-caso" autocomplete="off" data-persist placeholder="Ex.: lançamento do novo painel para clientes"></textarea></div><div class="field"><label for="p3-publico">Público e canal</label><textarea id="p3-publico" autocomplete="off" data-persist placeholder="Quem assiste e onde"></textarea></div><div class="field"><label for="p3-estilo">Estilo, formatos e música</label><textarea id="p3-estilo" autocomplete="off" data-persist placeholder="Ex.: isométrico, 9:16 + 1:1, 20 s, faixa própria"></textarea></div><div class="field"><label for="p3-telas">Telas e logos a capturar</label><textarea id="p3-telas" autocomplete="off" data-persist placeholder="URLs ou arquivos; qual é o clímax"></textarea></div><div class="field wide"><label for="p3-prompt">O pedido completo · monta sozinho, dá para editar</label><textarea id="p3-prompt" autocomplete="off" data-persist data-composed="p3" placeholder="/animate ... (preencha os campos acima)"></textarea><div class="compose-actions"><button class="copy-btn solo" type="button" data-copy-from="p3-prompt">Copiar pedido</button><button class="result-btn" type="button" data-recompose="p3">Remontar dos campos</button><button class="result-btn" type="button" data-clear="p3">Limpar</button><button class="result-btn" type="button" data-result="assets/pratica-skill-3.mp4" data-result-format="vertical" data-result-title="Exemplo 3 · Reel 9:16">▶ Ver resultado</button></div></div></div></div><aside class="speaker-notes" hidden>97–112 min. O QUE ESTE EXEMPLO ACRESCENTA: assets reais (a skill captura o site com tools/capture.mjs e embute as telas no build) e música própria mapeada em batidas (tools/beats.mjs), com cortes na batida e o clímax na pancada mais alta.
+
+COMO CONDUZIR: escolher um site ou app que alguém da turma possa abrir na hora. Perguntar: “qual tela merece ser o clímax?”. Sobre música: usar só faixa licenciada ou a trilha sintetizada pela skill; na dúvida, sintetizada.
+
+SUGESTÃO DE PREENCHIMENTO, se a turma travar:
+• Caso de uso: lançamento do novo painel de clientes no site da empresa.
+• Público e canal: clientes atuais, no Instagram e no LinkedIn.
+• Estilo, formatos e música: isométrico, 9:16 e 1:1, 20 s, trilha sintetizada com cortes na batida.
+• Telas e logos: a home, a tela de login e o painel (clímax), capturadas de [URL]; logo em ./assets/logo.svg.
+• Pedido completo: /animate um reel de lançamento de 20 segundos para [URL], estilo isométrico, 9:16 e 1:1, cortes na batida, trilha sintetizada. Capture a home, o login e o painel; o painel é o clímax, depois de meio segundo de silêncio. Logo em ./assets/logo.svg na última cena.
+
+AO RODAR: conferir as capturas antes do look check (ficam em pieces/<nome>/assets). Se a tela capturar com cookie banner ou login, pedir nova captura. Fechar com os três builds prontos lado a lado: explicativo, história, reel.</aside></section>
+
+<section class="slide" data-section="Práticas"><div class="eyebrow">Práticas · Apoio</div><h2>Anatomia de um bom pedido</h2><div class="checklist"><p>Assunto em uma frase e a única ideia a lembrar.</p><p>Duração e formatos (9:16, 1:1, 4:5, 16:9).</p><p>Estilo pronto ou pasta de referências.</p><p>Público e canal onde será exibido.</p><p>Com ou sem voz; com ou sem música própria.</p><p>Telas, logos e assets próprios a usar.</p><p>Fatos que aparecem na tela, com fonte.</p><p>O que não pode acontecer.</p></div><div class="question-band compact">Depois do pedido, a conversa continua: <strong>história, visual, storyboard</strong>. Aprovar barato antes de animar.</div><aside class="speaker-notes" hidden>Slide de apoio, sem tempo fixo. Usar como checklist enquanto preenchem as práticas. Os oito itens vêm das perguntas de intake da skill (intake.md) e dos exemplos do README.</aside></section>
+
+<section class="slide" data-section="Fechamento"><div class="eyebrow">Fechamento</div><h2>Quando usar, quando não usar</h2><div class="cards two"><article class="card accent-card"><h3>Vídeo em código brilha quando</h3><p>O conteúdo é informação: conceitos, processos, dados, histórias ilustradas, motion de texto, telas de produto.</p><p>Você precisa de consistência de marca, versões em vários formatos e revisão frequente.</p><p>O orçamento é tempo, não dinheiro.</p></article><article class="card"><h3>Prefira outro caminho quando</h3><p>Precisa de pessoas reais, cenas filmadas ou realismo fotográfico: gere pixels ou grave.</p><p>Já tem gravação e o trabalho é editar.</p><p>Uma imagem resolve. Nem tudo precisa se mover.</p></article></div><aside class="speaker-notes" hidden>112–114 min. Fechar a comparação aberta no início. Não vender a abordagem como universal. A pergunta de triagem: o que precisa aparecer na tela é informação ou é mundo real?</aside></section>
+
+<section class="slide orange-slide" data-section="Fechamento"><div class="eyebrow">Síntese</div><h2>Vídeo virou código.<br><em>Código, você revisa.</em></h2><div class="cards three"><article class="card"><span class="visual-number">1</span><h3>Previsível</h3><p>Cada frame é uma função do tempo. Nada de surpresas.</p></article><article class="card"><span class="visual-number">2</span><h3>Aprovado em etapas</h3><p>História, visual, storyboard. Animar é o último passo.</p></article><article class="card"><span class="visual-number">3</span><h3>Reutilizável</h3><p>Estilo salvo, skill instalada, próximo vídeo em minutos.</p></article></div><aside class="speaker-notes" hidden>114–116 min. Três ideias para levar. Conectar com a jornada: skills e agentes vistos antes se encontram aqui em um produto concreto.</aside></section>
+
+<section class="slide closing" data-section="Fechamento"><div class="eyebrow">AI Journey</div><h2>O que você vai<br><em>colocar em movimento?</em></h2><p class="lead">Instale a skill e escolha um caso das práticas.</p><div class="closing-footer"><div class="sources">Skill: <a href="https://github.com/cth9191/animate">github.com/cth9191/animate</a> · MIT · imagens docs/styles.png e docs/storyboard.png<br>Galeria da comunidade: <a href="https://skillry.dev/ai-videos/opus-5-5">skillry.dev/ai-videos/opus-5-5</a><br>Claude Code: <a href="https://code.claude.com">code.claude.com</a> · Playwright: <a href="https://playwright.dev">playwright.dev</a> · FFmpeg: <a href="https://ffmpeg.org">ffmpeg.org</a></div><img class="end-brand" src="ai-journey-logo.svg" alt="AI Journey"></div><aside class="speaker-notes" hidden>116–118 min. Tarefa: instalar a skill e escolher um caso. Lembrar de exportar as notas e os campos das práticas (botão Exportar notas). O repositório foi lido em 20/10/2026.</aside></section>
+
+</main>
+<nav id="controls" class="controls" aria-label="Controles da apresentação"><span id="sectionName"></span><button id="prevBtn" title="Slide anterior (←)" aria-label="Slide anterior">←</button><output id="slideCount" aria-live="polite"></output><button id="nextBtn" title="Próximo slide (→)" aria-label="Próximo slide">→</button><span class="control-divider"></span><button id="notesBtn" aria-expanded="false" aria-controls="notesPanel" title="Notas (N)">Notas</button><button id="presentBtn" title="Abrir janela do apresentador (P)">Apresentar ↗</button><button id="fullscreenBtn" title="Tela cheia (F)">Tela cheia</button></nav>
+<div id="progress" class="progress" aria-hidden="true"></div>
+<aside id="notesPanel" class="notes-panel" hidden><div class="panel-heading"><h2>Notas do apresentador</h2><button id="closeNotes" aria-label="Fechar notas">×</button></div><p id="notesSlideTitle"></p><label for="notesEditor">Roteiro deste slide</label><textarea id="notesEditor" spellcheck="true"></textarea><p class="caption" id="notesSaveStatus">As notas são salvas neste navegador.</p><button id="exportNotes" class="secondary">Exportar notas e práticas</button><p class="caption">N: notas · P: apresentar · F: tela cheia<br>← →: navegar · Home / End: início / fim · V: play / pause do vídeo</p></aside>
+<div id="notice" class="notice" role="status" hidden></div>
+<div id="presenter" class="presenter" hidden><div class="presenter-toolbar"><div><strong>Notas do apresentador · Claude agora faz vídeos</strong><span id="connectionStatus">Conectando à janela principal…</span></div><div class="timer-controls"><output id="timer">00:00</output><button id="timerToggle">Iniciar tempo</button><button id="timerReset">Zerar</button></div></div><div class="presenter-grid"><div class="presenter-card"><div class="eyebrow">Slide atual · <span id="presenterCount"></span></div><h3 id="presenterTitle"></h3><div class="presenter-navigation"><button id="presenterPrev">← Anterior</button><select id="slideSelect" aria-label="Ir para o slide"></select><button id="presenterNext">Próximo →</button></div><div class="next"><span>A seguir</span><b id="nextTitle"></b></div></div><div class="presenter-card presenter-notes"><label for="presenterEditor" class="eyebrow">Roteiro deste slide</label><textarea id="presenterEditor" spellcheck="true"></textarea><p class="caption" id="presenterSaveStatus"></p><div class="presenter-navigation"><button id="notesSmaller">A−</button><button id="notesLarger">A+</button></div><p class="presenter-help">← → ou Espaço: navegar na janela principal · As notas editadas aqui são salvas no navegador.</p></div></div></div>
+<dialog id="resultModal" class="result-modal" aria-labelledby="resultTitle"><header><span id="resultTitle">Resultado</span><button type="button" id="resultClose">Fechar · Esc</button></header><iframe id="resultFrame" title="Resultado do exemplo"></iframe><video id="resultVideo" playsinline controls loop hidden aria-label="Vídeo gerado no exemplo"></video><p>R: reiniciar</p></dialog>
+<script>
+'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  const slides = [...document.querySelectorAll('#deck > .slide')];
+  const titles = slides.map(slide => {
+    const source = slide.querySelector('h1,h2');
+    if (!source) return slide.querySelector('[aria-label]')?.getAttribute('aria-label') || slide.dataset.section || 'Slide';
+    const heading = source.cloneNode(true);
+    heading.querySelectorAll('br').forEach(br => br.replaceWith(' '));
+    return heading.textContent.replace(/\s+/g, ' ').trim();
+  });
+  const APP = 'aij-videos-presenter-v1';
+  const params = new URLSearchParams(location.search);
+  const presenterToken = params.get('presenter');
+  const targetOrigin = location.protocol === 'file:' ? '*' : location.origin;
+  const isTyping = target => target instanceof Element && !!target.closest('textarea,input,select,[contenteditable="true"]');
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let noticeTimer;
+  function notice(text) {
+    $('notice').textContent = text; $('notice').hidden = false;
+    clearTimeout(noticeTimer); noticeTimer = setTimeout(() => { $('notice').hidden = true; }, 7000);
+  }
+
+  // ---------- Presenter window ----------
+  if (presenterToken) {
+    document.body.classList.add('presenter-body');
+    for (const id of ['deck', 'controls', 'progress', 'notesPanel']) $(id).hidden = true;
+    $('presenter').hidden = false;
+    document.title = 'Notas do apresentador · Claude agora faz vídeos';
+    let currentIndex = 0, connected = false, lastReply = 0, fontSize = 18, elapsed = 0, startedAt = null;
+    const opener = window.opener;
+    const send = (type, extra = {}) => { if (opener && !opener.closed) opener.postMessage({ app: APP, token: presenterToken, type, ...extra }, targetOrigin); };
+    function setConnection(ok, message) {
+      connected = ok; $('connectionStatus').textContent = message;
+      for (const id of ['presenterPrev', 'presenterNext', 'slideSelect', 'presenterEditor']) $(id).disabled = !ok;
+      if (ok) { $('presenterPrev').disabled = currentIndex === 0; $('presenterNext').disabled = currentIndex === slides.length - 1; }
+    }
+    $('slideSelect').innerHTML = titles.map((title, i) => `<option value="${i}">${String(i + 1).padStart(2, '0')} · ${escapeHTML(title)}</option>`).join('');
+    window.addEventListener('message', event => {
+      const data = event.data;
+      if (event.source !== opener || !data || data.app !== APP || data.token !== presenterToken) return;
+      if (location.protocol !== 'file:' && event.origin !== location.origin) return;
+      if (data.type === 'disconnected') { lastReply = 0; setConnection(false, 'A janela principal foi fechada ou está recarregando.'); return; }
+      if (!['state', 'pong'].includes(data.type)) return;
+      lastReply = Date.now();
+      if (data.type === 'state') {
+        currentIndex = data.index;
+        $('presenterCount').textContent = `${currentIndex + 1} / ${titles.length}`;
+        $('presenterTitle').textContent = data.title;
+        $('slideSelect').value = String(currentIndex);
+        if (document.activeElement !== $('presenterEditor') && $('presenterEditor').value !== data.notes) $('presenterEditor').value = data.notes;
+        $('presenterSaveStatus').textContent = data.saveStatus;
+        $('nextTitle').textContent = data.nextTitle || 'Fim da apresentação';
+      }
+      setConnection(true, 'Sincronizado com a janela principal');
+    });
+    $('presenterPrev').onclick = () => send('navigate', { index: currentIndex - 1 });
+    $('presenterNext').onclick = () => send('navigate', { index: currentIndex + 1 });
+    $('slideSelect').onchange = event => send('navigate', { index: Number(event.target.value) });
+    $('presenterEditor').addEventListener('input', () => { if (connected) send('notes', { index: currentIndex, value: $('presenterEditor').value }); });
+    $('notesSmaller').onclick = () => { fontSize = Math.max(14, fontSize - 2); document.documentElement.style.setProperty('--note-size', `${fontSize}px`); };
+    $('notesLarger').onclick = () => { fontSize = Math.min(30, fontSize + 2); document.documentElement.style.setProperty('--note-size', `${fontSize}px`); };
+    const timerValue = () => elapsed + (startedAt === null ? 0 : Date.now() - startedAt);
+    function renderTimer() { const s = Math.floor(timerValue() / 1000); $('timer').textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
+    $('timerToggle').onclick = () => { if (startedAt === null) { startedAt = Date.now(); $('timerToggle').textContent = 'Pausar'; } else { elapsed = timerValue(); startedAt = null; $('timerToggle').textContent = 'Continuar'; } renderTimer(); };
+    $('timerReset').onclick = () => { elapsed = 0; startedAt = null; $('timerToggle').textContent = 'Iniciar tempo'; renderTimer(); };
+    setInterval(renderTimer, 500);
+    document.addEventListener('keydown', event => {
+      if (!connected || isTyping(event.target)) return;
+      if (['ArrowRight', ' ', 'PageDown'].includes(event.key)) { event.preventDefault(); send('navigate', { index: currentIndex + 1 }); }
+      if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); send('navigate', { index: currentIndex - 1 }); }
+    });
+    setInterval(() => {
+      if (!opener || opener.closed) { setConnection(false, 'A janela principal foi fechada.'); return; }
+      if (lastReply && Date.now() - lastReply > 6000) setConnection(false, 'Sem resposta da janela principal…');
+      send('ping');
+    }, 2000);
+    setConnection(false, 'Conectando à janela principal…');
+    send('ready');
+    return;
+  }
+
+  // ---------- Main deck ----------
+  let index = 0, presenterWindow = null, token;
+  try { token = sessionStorage.getItem('aij-videos-session'); if (!token) { token = crypto.randomUUID(); sessionStorage.setItem('aij-videos-session', token); } }
+  catch { token = `${Date.now()}-${Math.random().toString(36).slice(2)}`; }
+  const notesKey = `aij-videos-notes-v4:${location.pathname}`;
+  const fieldsKey = `aij-videos-fields-v2:${location.pathname}`;
+  try { localStorage.removeItem(`aij-videos-fields-v1:${location.pathname}`); sessionStorage.removeItem(fieldsKey); } catch { /* ignore */ }
+  let notes = slides.map(slide => slide.querySelector('.speaker-notes').textContent.trim());
+  let storageAvailable = true, saveStatus = 'Notas salvas neste navegador.';
+  try {
+    const stored = JSON.parse(localStorage.getItem(notesKey) || 'null');
+    if (Array.isArray(stored)) notes = notes.map((note, i) => typeof stored[i] === 'string' ? stored[i] : note);
+    const probe = `${notesKey}:probe`; localStorage.setItem(probe, '1'); localStorage.removeItem(probe);
+  } catch { storageAvailable = false; saveStatus = 'Notas apenas nesta sessão. Use “Exportar notas” para guardar uma cópia.'; }
+
+  // Practice fields always start empty; values live only in memory while the page is open.
+  const fields = [...document.querySelectorAll('textarea[data-persist]')];
+  let fieldValues = {};
+
+  fields.forEach(field => {
+    if (typeof fieldValues[field.id] === 'string') field.value = fieldValues[field.id];
+    field.addEventListener('input', () => {
+      fieldValues[field.id] = field.value;
+    });
+  });
+
+  // Each practice builds its full /animate request from the fields above it.
+  const composers = {
+    p1: { lead: 'um explicativo curto', parts: [['p1-caso', ''], ['p1-publico', 'Público e canal'], ['p1-estilo', 'Estilo e formato'], ['p1-nao', 'O que não pode acontecer']] },
+    p2: { lead: 'uma história', parts: [['p2-caso', ''], ['p2-publico', 'Público e canal'], ['p2-estilo', 'Estilo e formato'], ['p2-fio', 'Fio condutor e eras']] },
+    p3: { lead: 'um reel de lançamento', parts: [['p3-caso', ''], ['p3-publico', 'Público e canal'], ['p3-estilo', 'Estilo, formatos e música'], ['p3-telas', 'Telas e logos a capturar']] },
+  };
+  const saveFields = () => {};
+  function compose(key) {
+    const { lead, parts } = composers[key];
+    const values = parts.map(([id, label]) => [label, ($(id)?.value || '').trim()]);
+    if (!values.some(([, v]) => v)) return '';
+    const [[, caso], ...rest] = values;
+    const lines = [caso ? `/animate ${lead}: ${caso}` : `/animate ${lead}`];
+    rest.forEach(([label, v]) => { if (v) lines.push(`${label}: ${v}`); });
+    return lines.join('\n');
+  }
+  function applyCompose(key) {
+    const out = $(`${key}-prompt`);
+    out.value = compose(key);
+    fieldValues[out.id] = out.value; saveFields(); fit(out);
+  }
+  function fit(el) { el.style.height = 'auto'; el.style.height = `${el.scrollHeight + 2}px`; }
+  Object.entries(composers).forEach(([key, { parts }]) => {
+    const out = $(`${key}-prompt`); if (!out) return;
+    const manualKey = `${key}-prompt:manual`;
+    parts.forEach(([id]) => $(id)?.addEventListener('input', () => { if (!fieldValues[manualKey]) applyCompose(key); }));
+    out.addEventListener('input', () => { fit(out); fieldValues[manualKey] = out.value.trim() !== '' && out.value !== compose(key); saveFields(); });
+    document.querySelector(`[data-recompose="${key}"]`)?.addEventListener('click', () => { fieldValues[manualKey] = false; applyCompose(key); });
+    document.querySelector(`[data-clear="${key}"]`)?.addEventListener('click', () => { [...parts.map(([id]) => id), out.id].forEach(id => { const el = $(id); if (el) { el.value = ''; fieldValues[id] = ''; } }); fieldValues[manualKey] = false; out.style.height = ''; saveFields(); });
+    if (!fieldValues[manualKey] && compose(key)) applyCompose(key); else if (out.value) requestAnimationFrame(() => fit(out));
+  });
+
+  function updateNotesEditors() {
+    $('notesSlideTitle').textContent = `${index + 1}. ${titles[index]}`;
+    if ($('notesEditor').value !== notes[index]) $('notesEditor').value = notes[index];
+    $('notesSaveStatus').textContent = saveStatus;
+  }
+  function sendState() {
+    if (!presenterWindow || presenterWindow.closed) return;
+    presenterWindow.postMessage({ app: APP, token, type: 'state', index, title: titles[index], notes: notes[index], saveStatus, nextTitle: titles[index + 1] || '' }, targetOrigin);
+  }
+  function saveNote(i, value) {
+    if (!Number.isInteger(i) || i < 0 || i >= slides.length || typeof value !== 'string') return;
+    notes[i] = value;
+    try { localStorage.setItem(notesKey, JSON.stringify(notes)); storageAvailable = true; } catch { storageAvailable = false; }
+    saveStatus = storageAvailable ? 'Notas salvas neste navegador.' : 'Notas apenas nesta sessão. Use “Exportar notas” para guardar uma cópia.';
+    updateNotesEditors(); sendState();
+  }
+  function show(i, updateHash = true) {
+    if (!Number.isFinite(i)) return;
+    if ($('resultModal').open) $('resultModal').close();
+    index = Math.max(0, Math.min(slides.length - 1, Math.trunc(i)));
+    slides.forEach((slide, n) => {
+      const active = n === index;
+      slide.classList.toggle('active', active); slide.setAttribute('aria-hidden', String(!active));
+      if (active) slide.scrollTop = 0;
+      if (!active) slide.querySelectorAll('video').forEach(v => { v.pause(); });
+      else slide.querySelectorAll('video[data-autoplay]').forEach(v => { v.currentTime = 0; v.play().catch(() => { /* Autoplay blocked: V or a click starts it. */ }); });
+    });
+    $('slideCount').textContent = `${index + 1} / ${slides.length}`;
+    $('progress').style.width = `${(index + 1) / slides.length * 100}%`;
+    $('sectionName').textContent = slides[index].dataset.section;
+    $('sectionName').hidden = ['Abertura', 'Fechamento'].includes(slides[index].dataset.section);
+    document.body.classList.toggle('on-video', slides[index].classList.contains('video-full'));
+    $('prevBtn').disabled = index === 0; $('nextBtn').disabled = index === slides.length - 1;
+    if (updateHash) { try { history.replaceState(null, '', `#slide-${index + 1}`); } catch { /* fine without history */ } }
+    document.title = `${index + 1} · Claude agora faz vídeos · AI Journey`;
+    updateNotesEditors(); sendState();
+  }
+  const indexFromHash = () => { const m = location.hash.match(/^#slide-(\d+)$/); return m ? Number(m[1]) - 1 : 0; };
+  $('nextBtn').onclick = () => show(index + 1);
+  $('prevBtn').onclick = () => show(index - 1);
+  window.addEventListener('hashchange', () => show(indexFromHash(), false));
+  function toggleNotes(force) {
+    const open = typeof force === 'boolean' ? force : $('notesPanel').hidden;
+    $('notesPanel').hidden = !open; $('notesBtn').setAttribute('aria-expanded', String(open));
+    if (open) { updateNotesEditors(); $('notesEditor').focus(); } else $('notesBtn').focus({ preventScroll: true });
+  }
+  $('notesBtn').onclick = () => toggleNotes();
+  $('closeNotes').onclick = () => toggleNotes(false);
+  $('notesEditor').addEventListener('input', () => saveNote(index, $('notesEditor').value));
+  $('exportNotes').onclick = () => {
+    const practice = fields.filter(f => f.value.trim()).map(f => `${f.closest('.field').querySelector('label').textContent}: ${f.value.trim()}`);
+    const text = titles.map((title, i) => `${String(i + 1).padStart(2, '0')}. ${title}\n${'─'.repeat(55)}\n${notes[i]}`).join('\n\n\n')
+      + (practice.length ? `\n\n\nPRÁTICAS PREENCHIDAS\n${'═'.repeat(55)}\n${practice.join('\n\n')}` : '');
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = 'ai-journey-videos-notas.txt'; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  };
+  const isFullscreenActive = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  function syncFullscreenControls() {
+    const active = isFullscreenActive();
+    $('controls').hidden = active; $('progress').hidden = active;
+    $('fullscreenBtn').textContent = active ? 'Sair da tela cheia' : 'Tela cheia';
+    if (!active) wakeControls();
+  }
+  async function fullscreen() {
+    try {
+      if (isFullscreenActive()) { const exit = document.exitFullscreen || document.webkitExitFullscreen; if (exit) await exit.call(document); }
+      else { const enter = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen; if (enter) await enter.call(document.documentElement); else notice('Use a opção de tela cheia do seu navegador.'); }
+      syncFullscreenControls();
+    } catch { notice('Não foi possível entrar em tela cheia. Use a opção de tela cheia do navegador.'); }
+  }
+  $('fullscreenBtn').onclick = fullscreen;
+  document.addEventListener('fullscreenchange', syncFullscreenControls);
+  document.addEventListener('webkitfullscreenchange', syncFullscreenControls);
+  let idleTimer;
+  function wakeControls() {
+    document.body.classList.remove('idle'); clearTimeout(idleTimer);
+    if (document.body.classList.contains('presenting')) idleTimer = setTimeout(() => document.body.classList.add('idle'), 2800);
+  }
+  document.addEventListener('pointermove', wakeControls);
+  document.addEventListener('pointerdown', wakeControls);
+  function openPresenter() {
+    if (presenterWindow && !presenterWindow.closed) { presenterWindow.focus(); return; }
+    const url = new URL(location.href); url.searchParams.set('presenter', token); url.hash = '';
+    presenterWindow = window.open(url.href, `aij-videos-presenter-${token}`, 'popup=yes,width=1200,height=820');
+    if (!presenterWindow) { notice('A janela de notas foi bloqueada. Permita pop-ups para esta apresentação e clique em “Apresentar” novamente.'); return; }
+    toggleNotes(false); document.body.classList.add('presenting'); $('presentBtn').textContent = 'Notas ↗'; wakeControls();
+  }
+  $('presentBtn').onclick = openPresenter;
+  window.addEventListener('message', event => {
+    const data = event.data;
+    if (!data || data.app !== APP || data.token !== token) return;
+    if (location.protocol !== 'file:' && event.origin !== location.origin) return;
+    if (data.type === 'ready') {
+      try { if (!event.source || event.source.opener !== window) return; } catch { return; }
+      presenterWindow = event.source; document.body.classList.add('presenting'); $('presentBtn').textContent = 'Notas ↗'; sendState(); return;
+    }
+    if (event.source !== presenterWindow) return;
+    if (data.type === 'navigate' && Number.isInteger(data.index)) show(data.index);
+    if (data.type === 'notes') saveNote(data.index, data.value);
+    if (data.type === 'ping') presenterWindow.postMessage({ app: APP, token, type: 'pong' }, targetOrigin);
+  });
+  setInterval(() => {
+    if (presenterWindow && presenterWindow.closed) { presenterWindow = null; document.body.classList.remove('presenting', 'idle'); $('presentBtn').textContent = 'Apresentar ↗'; }
+  }, 1500);
+  window.addEventListener('beforeunload', () => { if (presenterWindow && !presenterWindow.closed) presenterWindow.postMessage({ app: APP, token, type: 'disconnected' }, targetOrigin); });
+  document.addEventListener('keydown', event => {
+    if (isTyping(event.target)) return;
+    if ($('resultModal').open) { if (event.key.toLowerCase() === 'r') { event.preventDefault(); const v = $('resultVideo'); if (!v.hidden) { v.currentTime = 0; v.play().catch(() => {}); } else { const f = $('resultFrame'); const src = f.src; f.src = 'about:blank'; setTimeout(() => { f.src = src; }, 30); } } else if (event.key !== 'Escape' && event.key !== 'Tab') event.preventDefault(); return; }
+    if (event.key === 'Escape' && !$('notesPanel').hidden) { toggleNotes(false); return; }
+    const k = event.key.toLowerCase();
+    if (['ArrowRight', ' ', 'PageDown'].includes(event.key)) { event.preventDefault(); show(index + 1); }
+    else if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); show(index - 1); }
+    else if (event.key === 'Home') { event.preventDefault(); show(0); }
+    else if (event.key === 'End') { event.preventDefault(); show(slides.length - 1); }
+    else if (k === 'n') { event.preventDefault(); toggleNotes(); }
+    else if (k === 'p') { event.preventDefault(); openPresenter(); }
+    else if (k === 'f') { event.preventDefault(); fullscreen(); }
+    else if (k === 'v') { const v = slides[index].querySelector('video'); if (v) { event.preventDefault(); if (v.paused) v.play().catch(() => notice('Clique no vídeo para reproduzir.')); else v.pause(); } }
+  });
+  document.querySelectorAll('[data-result]').forEach(button => button.addEventListener('click', () => {
+    $('resultTitle').textContent = button.dataset.resultTitle || 'Resultado';
+    const isVideo = /\.mp4$/i.test(button.dataset.result);
+    $('resultModal').classList.toggle('vertical', button.dataset.resultFormat === 'vertical');
+    $('resultFrame').hidden = isVideo; $('resultVideo').hidden = !isVideo;
+    if (isVideo) { $('resultVideo').src = button.dataset.result; } else { $('resultFrame').src = button.dataset.result; }
+    $('resultModal').showModal();
+    if (isVideo) $('resultVideo').play().catch(() => {});
+  }));
+  $('resultClose').addEventListener('click', () => $('resultModal').close());
+  $('resultVideo').addEventListener('error', () => { if (!$('resultModal').open || !$('resultVideo').getAttribute('src')) return; $('resultModal').close(); notice('Resultado ainda não adicionado: falta o vídeo em assets.'); });
+  $('resultModal').addEventListener('click', event => { if (event.target === $('resultModal')) $('resultModal').close(); });
+  $('resultModal').addEventListener('close', () => { $('resultFrame').src = 'about:blank'; const v = $('resultVideo'); v.pause(); v.removeAttribute('src'); v.load(); });
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; }
+    catch {
+      const area = document.createElement('textarea');
+      area.value = text; area.setAttribute('readonly', ''); area.style.position = 'fixed'; area.style.opacity = '0';
+      document.body.appendChild(area); area.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch { ok = false; }
+      area.remove(); return ok;
+    }
+  }
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    const label = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.dataset.copyFrom ? $(button.dataset.copyFrom).value.trim() : (button.dataset.copy || '');
+      if (!text) { notice('Preencha os campos primeiro.'); return; }
+      const ok = await copyText(text);
+      button.textContent = ok ? 'Copiado ✓' : 'Não copiou';
+      button.classList.toggle('done', ok);
+      if (!ok) notice('Não foi possível copiar. Selecione o texto e copie manualmente.');
+      setTimeout(() => { button.textContent = label; button.classList.remove('done'); }, 1800);
+    });
+  });
+  document.querySelectorAll('.video-slide video, .video-full video').forEach(v => v.addEventListener('click', () => { if (v.paused) v.play().catch(() => {}); else v.pause(); }));
+  show(indexFromHash(), false);
+})();
+</script></body></html>
