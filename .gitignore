@@ -1,9 +1,9 @@
-# Publica só a apresentação "Claude agora faz vídeos" e o que ela usa.
+# Publica só a versão pública (index.html, sem notas) e o que ela usa.
+# O deck com notas e o build-public.py ficam só nesta máquina.
 /*
 !/.gitignore
 !/README.md
 !/index.html
-!/ai-journey-claude-agora-faz-videos.html
 !/ai-journey-logo.svg
 !/claude-showreel-2026.mp4
 !/fontes-claude-agora-faz-videos.txt
